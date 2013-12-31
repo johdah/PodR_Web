@@ -1,0 +1,4 @@
+dahlberg_podr:
+    resource: "@DahlbergPodrBundle/Resources/config/routing.yml"
+    prefix:   /
+

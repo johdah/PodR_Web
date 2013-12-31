@@ -1,0 +1,7 @@
+parameters:
+#    dahlberg_podr.example.class: Dahlberg\PodrBundle\Example
+
+services:
+#    dahlberg_podr.example:
+#        class: %dahlberg_podr.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title 'PodR' %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% stylesheets '@DahlbergPodrBundle/Resources/public/css/foundation.min.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% javascripts '@DahlbergPodrBundle/Resources/public/js/modernizr.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+</head>
+<body>
+    <nav class="top-bar" data-topbar>
+        <ul class="title-area">
+            <li class="name">
+                <h1><a href="/">PodR</a></h1>
+            </li>
+            <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+        </ul>
+
+        <section class="top-bar-section">
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li class="active"><a href="#">Dashboard</a></li>
+                <li class="has-dropdown">
+                    <a href="#">Welcome John Doe</a>
+                    <ul class="dropdown">
+                        <li><a href="#">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Left Nav Section -->
+            <ul class="left">
+                <li><a href="#">Podcast</a></li>
+            </ul>
+        </section>
+    </nav>
+
+    <div id="page">
+        {% block body %}{% endblock %}
+    </div>
+
+    {% javascripts  '@DahlbergPodrBundle/Resources/public/js/jquery.js'
+                    '@DahlbergPodrBundle/Resources/public/js/foundation.min.js'
+                    '@DahlbergPodrBundle/Resources/public/js/application.coffee' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+</body>
+</html>
