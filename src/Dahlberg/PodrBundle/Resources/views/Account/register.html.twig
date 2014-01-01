@@ -1,2 +1,10 @@
 {# src/Dahlberg/PodrBundle/Resources/views/Account/register.html.twig #}
-{{ form(form) }}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    {{ form(form) }}
+</div>
+{% endblock %}

@@ -26,13 +26,17 @@
         <section class="top-bar-section">
             <!-- Right Nav Section -->
             <ul class="right">
-                <li class="active"><a href="#">Dashboard</a></li>
+                {% if app.user %}
                 <li class="has-dropdown">
-                    <a href="#">Welcome John Doe</a>
+                    <a href="#">{{ app.user.username }}</a>
                     <ul class="dropdown">
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="{{ path('account_logout') }}">Logout</a></li>
                     </ul>
                 </li>
+                {% else %}
+                <li><a href="{{ path('account_login') }}">Login</a></li>
+                <li class="active"><a href="{{ path('account_register') }}">Register</a></li>
+                {% endif %}
             </ul>
 
             <!-- Left Nav Section -->

@@ -1,24 +1,32 @@
 {# src/Dahlberg/PodrBundle/Resources/views/Account/login.html.twig #}
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+{% extends '::base.html.twig' %}
 
-<form action="{{ path('account_login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+{% block title %}{{ parent() }}{% endblock %}
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+{% block body %}
+<div class="row">
+    {% if error %}
+        <div>{{ error.message }}</div>
+    {% endif %}
 
-    <input type="checkbox" id="remember_me" name="_remember_me" checked />
-    <label for="remember_me">Keep me logged in</label>
+    <form action="{{ path('account_login_check') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-    {#
-        If you want to control the URL the user
-        is redirected to on success (more details below)
-        <input type="hidden" name="_target_path" value="/account" />
-    #}
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
 
-    <button type="submit">login</button>
-</form>
+        <input type="checkbox" id="remember_me" name="_remember_me" checked />
+        <label for="remember_me">Keep me logged in</label>
+
+        {#
+            If you want to control the URL the user
+            is redirected to on success (more details below)
+            <input type="hidden" name="_target_path" value="/account" />
+        #}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+        <button type="submit">login</button>
+    </form>
+</div>
+{% endblock %}
