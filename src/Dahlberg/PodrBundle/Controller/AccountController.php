@@ -5,6 +5,7 @@ namespace Dahlberg\PodrBundle\Controller;
 use Dahlberg\PodrBundle\Entity\Role;
 use Dahlberg\PodrBundle\Form\Model\Registration;
 use Dahlberg\PodrBundle\Form\Type\RegistrationType;
+use Doctrine\Orm\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -20,8 +21,15 @@ class AccountController extends Controller {
         if ($form->isValid()) {
             $registration = $form->getData();
             $user = $registration->getUser();
-            $role = new Role();
-            $role->setRole('ROLE_USER');
+
+            $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:Role');
+            $role = $repository->findOneByRole('ROLE_USER');
+            if($role == null) {
+                $role = new Role();
+                $role->setName('User');
+                $role->setRole('ROLE_USER');
+                $em->persist($role);
+            }
             $user->addRole($role);
 
             $factory = $this->container->get('security.encoder_factory');
@@ -29,10 +37,13 @@ class AccountController extends Controller {
             $password = $encoder->encodePassword($user->getPassword(), $user->getSalt()); //where $user->password has been bound in plaintext by the form
             $user->setPassword($password);
 
+            $user->setUsername($user->getEmail());
+
             $em->persist($user);
+            // TODO: Need to check if user already exists
             $em->flush();
 
-            return $this->redirect($this->generateUrl('login'));
+            return $this->redirect($this->generateUrl('account_login'));
         }
 
         return $this->render(
