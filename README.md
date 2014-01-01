@@ -1,4 +1,4 @@
-RemembeR Web Edition
+PodR Web Edition
 ========================
 
 1) Prepare the server
