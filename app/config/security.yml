@@ -26,6 +26,7 @@ security:
             form_login:
                 login_path:  login
                 check_path:  login_check
+                csrf_provider: form.csrf_provider
 
     access_control:
         #- { path: /, roles: IS_AUTHENTICATED_ANONYMOUSLY }
