@@ -13,6 +13,11 @@ security:
         main:
             entity:
                 class: Dahlberg\PodrBundle\Entity\User
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
 
     firewalls:
         secured_area:
