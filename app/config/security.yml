@@ -21,6 +21,7 @@ security:
                 login_path:  account_login
                 check_path:  account_login_check
                 csrf_provider: form.csrf_provider
+            logout: ~
             pattern:    ^/
             remember_me:
                 key:      "%secret%"
@@ -29,7 +30,9 @@ security:
                 domain:   ~ # Defaults to the current domain from $_SERVER
 
     access_control:
-        #- { path: /, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_USER }
+        - { path: ^/login_check, roles: ROLE_USER }
+        - { path: ^/account/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/account/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/account, roles: ROLE_USER }
+        - { path: ^/hello, roles: ROLE_USER }
+        - { path: ^, roles: IS_AUTHENTICATED_ANONYMOUSLY }

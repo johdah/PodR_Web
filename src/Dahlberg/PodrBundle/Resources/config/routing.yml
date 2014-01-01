@@ -3,7 +3,7 @@ dahlberg_podr_homepage:
     defaults: { _controller: DahlbergPodrBundle:Default:index }
 
 account_create:
-    path:     /register/create
+    path:     /account/create
     defaults: { _controller: DahlbergPodrBundle:Account:create }
 
 account_login:
@@ -13,6 +13,9 @@ account_login:
 account_login_check:
     path:   /login_check
 
+account_logout:
+    path:   /logout
+
 account_register:
-    path:     /register
+    path:     /account/register
     defaults: { _controller: DahlbergPodrBundle:Account:register }
