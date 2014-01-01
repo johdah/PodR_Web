@@ -13,22 +13,23 @@ security:
         main:
             entity:
                 class: Dahlberg\PodrBundle\Entity\User
+
+    firewalls:
+        main:
+            anonymous: ~
+            form_login:
+                login_path:  account_login
+                check_path:  account_login_check
+                csrf_provider: form.csrf_provider
+            pattern:    ^/
             remember_me:
                 key:      "%secret%"
                 lifetime: 31536000 # 365 days in seconds
                 path:     /
                 domain:   ~ # Defaults to the current domain from $_SERVER
 
-    firewalls:
-        secured_area:
-            pattern:    ^/
-            anonymous: ~
-            form_login:
-                login_path:  login
-                check_path:  login_check
-                csrf_provider: form.csrf_provider
-
     access_control:
         #- { path: /, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }

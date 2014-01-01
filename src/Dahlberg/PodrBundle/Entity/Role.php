@@ -39,14 +39,6 @@ class Role implements RoleInterface
         $this->users = new ArrayCollection();
     }
 
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
     /**
      * @see RoleInterface
      */
@@ -55,27 +47,82 @@ class Role implements RoleInterface
         return $this->role;
     }
 
-    public function getUsers()
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
     {
-        return $this->roles->toArray();
+        return $this->id;
     }
 
-    public function setId($id) {
-        $this->id = $id;
-    }
-
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Role
+     */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Role
+     */
     public function setRole($role)
     {
         $this->role = $role;
+
+        return $this;
     }
 
-    public function setUsers($users)
+    /**
+     * Add users
+     *
+     * @param \Dahlberg\PodrBundle\Entity\User $users
+     * @return Role
+     */
+    public function addUser(\Dahlberg\PodrBundle\Entity\User $users)
     {
-        $this->users = $users;
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \Dahlberg\PodrBundle\Entity\User $users
+     */
+    public function removeUser(\Dahlberg\PodrBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

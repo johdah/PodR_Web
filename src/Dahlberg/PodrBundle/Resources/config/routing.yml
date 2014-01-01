@@ -2,8 +2,17 @@ dahlberg_podr_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: DahlbergPodrBundle:Default:index }
 
-login:
+account_create:
+    path:     /register/create
+    defaults: { _controller: DahlbergPodrBundle:Account:create }
+
+account_login:
     path:   /login
-    defaults:  { _controller: DahlbergPodrBundle:Auth:login }
-login_check:
+    defaults:  { _controller: DahlbergPodrBundle:Account:login }
+
+account_login_check:
     path:   /login_check
+
+account_register:
+    path:     /register
+    defaults: { _controller: DahlbergPodrBundle:Account:register }
