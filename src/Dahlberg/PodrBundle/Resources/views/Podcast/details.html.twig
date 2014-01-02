@@ -1,0 +1,22 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Podcast/details.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ podcast.getTitle }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a href="{{ path('podcast_index') }}">Podcasts</a>
+            <a class="current">{{ podcast.getTitle }}</a>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="large-4 columns">
+        </div>
+        <div class="large-8 columns">
+            <h1>{{ podcast.getTitle }}</h1>
+            <h4>{{ podcast.getItunesAuthor }}</h4>
+        </div>
+    </div>
+{% endblock %}

@@ -12,6 +12,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PodcastController extends Controller
 {
+    public function detailsAction($id) {
+        $podcast = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:Podcast')
+            ->find($id);
+
+        if(!$podcast)
+            throw $this->createNotFoundException('The podcast does not exist');
+
+        return $this->render('DahlbergPodrBundle:Podcast:details.html.twig', array(
+            'podcast' => $podcast,
+        ));
+    }
+
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

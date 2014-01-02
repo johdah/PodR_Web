@@ -7,7 +7,9 @@
     <title>{% block title 'PodR' %}</title>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    {% stylesheets '@DahlbergPodrBundle/Resources/public/css/foundation.min.css' filter='cssrewrite' %}
+    {% stylesheets '@DahlbergPodrBundle/Resources/public/css/foundation.min.css'
+                   '@DahlbergPodrBundle/Resources/public/css/application.css'
+                   filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
     {% javascripts '@DahlbergPodrBundle/Resources/public/js/modernizr.js' %}

@@ -6,6 +6,12 @@
 
 {% block body %}
     <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a class="current">Podcasts</a>
+        </nav>
+    </div>
+    <div class="row">
         <h2>Podcasts</h2>
 
         {% if podcasts %}
@@ -20,7 +26,7 @@
             <tbody>
                 {% for podcast in podcasts %}
                 <tr>
-                    <td>{{ podcast.getTitle }}</td>
+                    <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
                     <td>{% if podcast.getDateUpdated %}{{ podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
                     <td><a href="{{ path('podcast_update', {'id': podcast.getId}) }}" class="button tiny round">Update</a></td>
                 </tr>
