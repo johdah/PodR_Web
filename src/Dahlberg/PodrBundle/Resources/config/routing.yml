@@ -25,6 +25,11 @@ account_register:
     path:     /account/register
     defaults: { _controller: DahlbergPodrBundle:Account:register }
 
+# Episode
+episode_details:
+    path:     /episode/{id}
+    defaults: { _controller: DahlbergPodrBundle:Episode:details }
+
 # Podcast
 podcast_details:
     path:     /podcast/{id}

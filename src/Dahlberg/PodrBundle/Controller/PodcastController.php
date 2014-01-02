@@ -1,5 +1,5 @@
 <?php
-
+// src/Dahlberg/PodrBundle/Controller/PodcastController.php;
 namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\Episode;
@@ -10,8 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
-class PodcastController extends Controller
-{
+class PodcastController extends Controller {
     public function detailsAction($id) {
         $podcast = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:Podcast')

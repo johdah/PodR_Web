@@ -67,7 +67,7 @@
                 <tbody>
                 {% for episode in podcast.getEpisodes %}
                     <tr>
-                        <td>{{ episode.getTitle }}</td>
+                        <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
                         <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                     </tr>
                 {% endfor %}

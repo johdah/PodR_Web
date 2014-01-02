@@ -1,0 +1,31 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Episode/details.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ episode.getTitle }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a href="{{ path('podcast_index') }}">Podcasts</a>
+            <a href="{{ path('podcast_update', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle }}</a>
+            <a class="current">{{ episode.getTitle }}</a>
+        </nav>
+    </div>
+    <div class="row podcast-details">
+        <div class="large-4 columns">
+           {% if episode.getItunesImage %}
+            <a class="th radius" href="{{ episode.getItunesImage }}">
+                <img src="{{ episode.getItunesImage }}">
+            </a>
+            {% elseif episode.getPodcast.getItunesImage %}
+            <a class="th radius" href="{{ episode.getPodcast.getItunesImage }}">
+                <img src="{{ episode.getPodcast.getItunesImage }}">
+            </a>
+            {% endif %}
+        </div>
+        <div class="large-8 columns">
+            <h1>{{ episode.getTitle }}</h1>
+        </div>
+    </div>
+{% endblock %}

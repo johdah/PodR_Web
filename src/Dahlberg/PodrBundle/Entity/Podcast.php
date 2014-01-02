@@ -104,6 +104,7 @@ class Podcast {
 
     /**
      * @ORM\OneToMany(targetEntity="Episode", mappedBy="podcast")
+     * @ORM\OrderBy({"publishedDate" = "desc"})
      */
     private $episodes;
 
