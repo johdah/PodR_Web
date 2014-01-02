@@ -28,7 +28,7 @@ class Podcast {
     private $description;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      */
     private $feedurl;
 
@@ -113,9 +113,9 @@ class Podcast {
     private $episodes;
 
     public function __construct() {
-        $this->dateAdded = new DateTime('NOW');
-        $this->dateUpdated = new DateTime('NOW');
-        $this->lastUpdated = new DateTime('NOW');
+        $this->dateAdded = new \DateTime('NOW');
+        $this->dateUpdated = new \DateTime('NOW');
+        $this->lastUpdated = new \DateTime('NOW');
     }
 
     /**

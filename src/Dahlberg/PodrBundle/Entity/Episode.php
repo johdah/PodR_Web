@@ -105,8 +105,8 @@ class Episode {
     private $podcast;
 
     public function __construct() {
-        $this->dateAdded = new DateTime('NOW');
-        $this->dateUpdated = new DateTime('NOW');
+        $this->dateAdded = new \DateTime('NOW');
+        $this->dateUpdated = new \DateTime('NOW');
     }
 
     /**
