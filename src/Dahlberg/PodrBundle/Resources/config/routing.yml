@@ -35,9 +35,33 @@ podcast_details:
     path:     /podcast/{id}
     defaults: { _controller: DahlbergPodrBundle:Podcast:details }
 
+podcast_dislike:
+    path:      /podcast/{id}/dislike
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:dislike }
+
+podcast_follow:
+    path:      /podcast/{id}/follow
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:follow }
+
 podcast_index:
     path:     /podcast
     defaults: { _controller: DahlbergPodrBundle:Podcast:index }
+
+podcast_like:
+    path:      /podcast/{id}/like
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:like }
+
+podcast_star:
+    path:      /podcast/{id}/star
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:star }
+
+podcast_unfollow:
+    path:      /podcast/{id}/unfollow
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:unfollow }
+
+podcast_unstar:
+    path:      /podcast/{id}/unstar
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:unstar }
 
 podcast_update:
     path:      /podcast/{id}/update

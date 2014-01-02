@@ -19,21 +19,21 @@
             </a>
             {% endif %}
             <div class="row">
-                <div class="large-11 large-centered columns">
+                <div class="large-12 text-center columns">
                     <ul class="button-group round">
                         {% if userPodcast and userPodcast.getFollowing %}
-                            <li><a href="#" class="button tiny alert">Unfollow</a></li>
+                            <li><a href="{{ path('podcast_unfollow', {'id': podcast.getId}) }}" class="button tiny alert">Unfollow</a></li>
                         {% else %}
-                            <li><a href="#" class="button tiny success">Follow</a></li>
+                            <li><a href="{{ path('podcast_follow', {'id': podcast.getId}) }}" class="button tiny success">Follow</a></li>
                         {% endif %}
 
-                        <li><a href="#" class="button tiny secondary">Like</a></li>
-                        <li><a href="#" class="button tiny disabled secondary">Dislike</a></li>
+                        <li><a href="{{ path('podcast_like', {'id': podcast.getId}) }}" class="button tiny secondary {% if userPodcast and userPodcast.getRating == 1 %}disabled{% endif %}">Like</a></li>
+                        <li><a href="{{ path('podcast_dislike', {'id': podcast.getId}) }}" class="button tiny secondary {% if userPodcast and userPodcast.getRating == -1 %}disabled{% endif %}">Dislike</a></li>
 
                         {% if userPodcast and userPodcast.getStarred %}
-                            <li><a href="#" class="button tiny alert">Unstar</a></li>
+                            <li><a href="{{ path('podcast_unstar', {'id': podcast.getId}) }}" class="button tiny alert">Unstar</a></li>
                         {% else %}
-                            <li><a href="#" class="button tiny success">Star</a></li>
+                            <li><a href="{{ path('podcast_star', {'id': podcast.getId}) }}" class="button tiny success">Star</a></li>
                         {% endif %}
                     </ul>
                 </div>

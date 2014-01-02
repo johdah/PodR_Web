@@ -4,6 +4,7 @@ namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\Episode;
 use Dahlberg\PodrBundle\Entity\Podcast;
+use Dahlberg\PodrBundle\Entity\UserPodcast;
 use Dahlberg\PodrBundle\Lib\PodcastParser;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,6 +28,32 @@ class PodcastController extends Controller {
             'podcast' => $podcast,
             'userPodcast' => $userPodcast,
         ));
+    }
+
+    public function dislikeAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setRating(-1);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
+    public function followAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setFollowing(true);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
     }
 
     public function indexAction(Request $request)
@@ -67,6 +94,58 @@ class PodcastController extends Controller {
         ));
     }
 
+    public function likeAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setRating(1);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
+    public function starAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setStarred(true);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
+    public function unfollowAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setFollowing(false);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
+    public function unstarAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $userPodcast = $this->prepareUserPodcast($id);
+        $userPodcast->setStarred(false);
+        $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
     public function updateAction($id) {
         $podcast = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:Podcast')
@@ -78,6 +157,30 @@ class PodcastController extends Controller {
         $this->updater($podcast);
 
         return $this->redirect($this->generateUrl('podcast_index'));
+    }
+
+    /* NOT ACTIONS */
+
+    public function prepareUserPodcast($podcastId) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $podcast = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:Podcast')
+            ->find($podcastId);
+
+        if(!$podcast)
+            throw $this->createNotFoundException('The podcast does not exist');
+
+        $userPodcast = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:UserPodcast')
+            ->findOneBy(array('podcast' => $podcast, 'user' => $user));
+
+        if(!$userPodcast) {
+            $userPodcast = new UserPodcast();
+            $userPodcast->setPodcast($podcast);
+            $userPodcast->setUser($user);
+        }
+
+        return $userPodcast;
     }
 
     public function updater(Podcast $podcast) {
