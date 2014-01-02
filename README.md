@@ -9,7 +9,10 @@ PodR Web Edition
 - Copy parameters.yml.dist to parameters.yml and update the settings
 - Chmod 777 app/cache and app/logs
 
-3) Troubleshooting
+3) Upgrading
+- Run "php app/console assetic:dump --env=prod --no-debug" to dump the css/js resources.
+
+4) Troubleshooting
 - Routing does not work:
   Symfony2 DOES NOT work with the module libapache2-mod-php5filter. In order to solve this problem, you have to uninstall libapache2-mod-php5filter. AFter you do that, you have to install libapache2-mod-php5
 - Can't access app_dev.php (not on localhost)
