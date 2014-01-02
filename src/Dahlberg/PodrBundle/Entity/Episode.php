@@ -73,17 +73,17 @@ class Episode {
     private $itunesIsClosedCaption = false;
 
     /**
-     * @ORM\Column(name="itunes_image", type="string")
+     * @ORM\Column(name="itunes_image", type="string", nullable=true)
      */
     private $itunesImage;
 
     /**
-     * @ORM\Column(name="itunes_subtitle", type="text")
+     * @ORM\Column(name="itunes_subtitle", type="text", nullable=true)
      */
     private $itunesSubtitle;
 
     /**
-     * @ORM\Column(name="itunes_summary", type="text")
+     * @ORM\Column(name="itunes_summary", type="text", nullable=true)
      */
     private $itunesSummary;
 

@@ -2,6 +2,7 @@ root:
     pattern:  /
     defaults: { _controller: DahlbergPodrBundle:Default:index }
 
+# Account
 account_create:
     path:     /account/create
     defaults: { _controller: DahlbergPodrBundle:Account:create }
@@ -24,6 +25,11 @@ account_register:
     path:     /account/register
     defaults: { _controller: DahlbergPodrBundle:Account:register }
 
+# Podcast
 podcast_index:
     path:     /podcast
     defaults: { _controller: DahlbergPodrBundle:Podcast:index }
+
+podcast_update:
+    path:      /podcast/{id}/update
+    defaults:  { _controller: DahlbergPodrBundle:Podcast:update }

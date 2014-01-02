@@ -38,11 +38,6 @@ class Podcast {
     private $language;
 
     /**
-     * @ORM\Column(name="last_updated", type="datetime", nullable=true)
-     */
-    private $lastUpdated;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $link;
@@ -115,7 +110,6 @@ class Podcast {
     public function __construct() {
         $this->dateAdded = new \DateTime('NOW');
         $this->dateUpdated = new \DateTime('NOW');
-        $this->lastUpdated = new \DateTime('NOW');
     }
 
     /**

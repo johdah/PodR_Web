@@ -21,8 +21,8 @@
                 {% for podcast in podcasts %}
                 <tr>
                     <td>{{ podcast.getTitle }}</td>
-                    <td>1970-01-01*</td>
-                    <td>*</td>
+                    <td>{% if podcast.getDateUpdated %}{{ podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                    <td><a href="{{ path('podcast_update', {'id': podcast.getId}) }}" class="button tiny round">Update</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
