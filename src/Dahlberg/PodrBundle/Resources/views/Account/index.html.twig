@@ -1,0 +1,11 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Account/index.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ app.user.username }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <h2>{{ app.user.username }}</h2>
+        <p>Profile is not implemented yet.</p>
+    </div>
+{% endblock %}

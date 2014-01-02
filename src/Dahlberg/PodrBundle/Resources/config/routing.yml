@@ -6,6 +6,10 @@ account_create:
     path:     /account/create
     defaults: { _controller: DahlbergPodrBundle:Account:create }
 
+account_index:
+    path:     /account
+    defaults:  { _controller: DahlbergPodrBundle:Account:index }
+
 account_login:
     path:     /login
     defaults:  { _controller: DahlbergPodrBundle:Account:login }

@@ -52,6 +52,14 @@ class AccountController extends Controller {
         );
     }
 
+    public function indexAction()
+    {
+        return $this->render(
+            'DahlbergPodrBundle:Account:index.html.twig',
+            array()
+        );
+    }
+
     public function loginAction(Request $request) {
         $session = $request->getSession();
 
