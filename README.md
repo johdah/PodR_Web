@@ -5,9 +5,9 @@ PodR Web Edition
 - Install nodejs and coffeescript and set the path in config.php
 
 2) Prepare the project
-
 - Copy parameters.yml.dist to parameters.yml and update the settings
 - Chmod 777 app/cache and app/logs
+- Setup DB with the command "php app/console doctrine:schema:update --force"
 
 3) Upgrading
 - Run "php app/console assetic:dump --env=prod --no-debug" to dump the css/js resources.

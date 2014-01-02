@@ -1,0 +1,33 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Podcast/index.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | Podcasts{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <h2>Podcasts</h2>
+
+        {% if podcasts %}
+        <table>
+            <thead>
+                <tr>
+                    <th width="200">Title</th>
+                    <th width="150">Last Updated</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for podcast in podcasts %}
+                <tr>
+                    <td>{{ podcast.getTitle }}</td>
+                    <td>1970-01-01*</td>
+                    <td>*</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No podcasts found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

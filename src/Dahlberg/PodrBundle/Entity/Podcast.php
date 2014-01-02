@@ -38,7 +38,7 @@ class Podcast {
     private $language;
 
     /**
-     * @ORM\Column(name="last_updated", type="datetime")
+     * @ORM\Column(name="last_updated", type="datetime", nullable=true)
      */
     private $lastUpdated;
 

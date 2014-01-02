@@ -23,3 +23,7 @@ account_logout:
 account_register:
     path:     /account/register
     defaults: { _controller: DahlbergPodrBundle:Account:register }
+
+podcast_index:
+    path:     /podcast
+    defaults: { _controller: DahlbergPodrBundle:Podcast:index }

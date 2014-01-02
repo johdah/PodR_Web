@@ -54,7 +54,7 @@
             <!-- Left Nav Section -->
             <ul class="left">
                 {% if app.user %}
-                <li><a href="#">Podcast</a></li>
+                <li><a href="{{ path('podcast_index') }}">Podcast</a></li>
                 {% endif %}
             </ul>
         </section>
