@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * Class User
  * @package Dahlberg\PodrBundle\Entity
  *
- * @ORM\Table(name="podr_users")
+ * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Dahlberg\PodrBundle\Entity\UserRepository")
  */
 class User implements AdvancedUserInterface, \Serializable {
