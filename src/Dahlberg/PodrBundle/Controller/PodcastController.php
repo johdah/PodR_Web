@@ -12,15 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PodcastController extends Controller {
     public function detailsAction($id) {
+        $user = $this->get('security.context')->getToken()->getUser();
         $podcast = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:Podcast')
             ->find($id);
+        $userPodcast = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:UserPodcast')
+            ->findOneBy(array('podcast' => $podcast, 'user' => $user));
 
         if(!$podcast)
             throw $this->createNotFoundException('The podcast does not exist');
 
         return $this->render('DahlbergPodrBundle:Podcast:details.html.twig', array(
             'podcast' => $podcast,
+            'userPodcast' => $userPodcast,
         ));
     }
 
