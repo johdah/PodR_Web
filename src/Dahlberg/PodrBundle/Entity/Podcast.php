@@ -108,6 +108,11 @@ class Podcast {
      */
     private $episodes;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserPodcast", mappedBy="podcast")
+     */
+    private $userPodcasts;
+
     public function __construct() {
         $this->dateAdded = new \DateTime('NOW');
         $this->dateUpdated = new \DateTime('NOW');
@@ -568,5 +573,38 @@ class Podcast {
     public function getEpisodes()
     {
         return $this->episodes;
+    }
+
+    /**
+     * Add userPodcasts
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @return Podcast
+     */
+    public function addUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    {
+        $this->userPodcasts[] = $userPodcasts;
+
+        return $this;
+    }
+
+    /**
+     * Remove userPodcasts
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     */
+    public function removeUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    {
+        $this->userPodcasts->removeElement($userPodcasts);
+    }
+
+    /**
+     * Get userPodcasts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserPodcasts()
+    {
+        return $this->userPodcasts;
     }
 }

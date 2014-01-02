@@ -87,6 +87,18 @@ class Episode {
      */
     private $itunesSummary;
 
+    // ...
+    /**
+     * @ORM\ManyToOne(targetEntity="Podcast", inversedBy="episodes")
+     * @ORM\JoinColumn(name="podcast_id", referencedColumnName="id")
+     **/
+    private $podcast;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserEpisode", mappedBy="episode")
+     */
+    private $userEpisodes;
+
     /**
      * @ORM\Column(name="date_added", type="datetime")
      */
@@ -96,13 +108,6 @@ class Episode {
      * @ORM\Column(name="date_updated", type="datetime")
      */
     private $dateUpdated;
-
-    // ...
-    /**
-     * @ORM\ManyToOne(targetEntity="Podcast", inversedBy="episodes")
-     * @ORM\JoinColumn(name="podcast_id", referencedColumnName="id")
-     **/
-    private $podcast;
 
     public function __construct() {
         $this->dateAdded = new \DateTime('NOW');
@@ -508,5 +513,38 @@ class Episode {
     public function getPodcast()
     {
         return $this->podcast;
+    }
+
+    /**
+     * Add userEpisodes
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     * @return Episode
+     */
+    public function addUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    {
+        $this->userEpisodes[] = $userEpisodes;
+
+        return $this;
+    }
+
+    /**
+     * Remove userEpisodes
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     */
+    public function removeUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    {
+        $this->userEpisodes->removeElement($userEpisodes);
+    }
+
+    /**
+     * Get userEpisodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserEpisodes()
+    {
+        return $this->userEpisodes;
     }
 }

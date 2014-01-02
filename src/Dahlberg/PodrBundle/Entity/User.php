@@ -52,6 +52,16 @@ class User implements AdvancedUserInterface, \Serializable {
      */
     private $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserEpisode", mappedBy="user")
+     */
+    private $userEpisodes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserPodcast", mappedBy="user")
+     */
+    private $userPodcasts;
+
     public function __construct()
     {
         $this->isActive = true;
@@ -296,5 +306,71 @@ class User implements AdvancedUserInterface, \Serializable {
     public function removeRole(\Dahlberg\PodrBundle\Entity\Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    /**
+     * Add userEpisodes
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     * @return User
+     */
+    public function addUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    {
+        $this->userEpisodes[] = $userEpisodes;
+
+        return $this;
+    }
+
+    /**
+     * Remove userEpisodes
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     */
+    public function removeUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    {
+        $this->userEpisodes->removeElement($userEpisodes);
+    }
+
+    /**
+     * Get userEpisodes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserEpisodes()
+    {
+        return $this->userEpisodes;
+    }
+
+    /**
+     * Add userPodcasts
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @return User
+     */
+    public function addUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    {
+        $this->userPodcasts[] = $userPodcasts;
+
+        return $this;
+    }
+
+    /**
+     * Remove userPodcasts
+     *
+     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     */
+    public function removeUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    {
+        $this->userPodcasts->removeElement($userPodcasts);
+    }
+
+    /**
+     * Get userPodcasts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserPodcasts()
+    {
+        return $this->userPodcasts;
     }
 }
