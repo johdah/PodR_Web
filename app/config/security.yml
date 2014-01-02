@@ -17,6 +17,7 @@ security:
     firewalls:
         main:
             anonymous: ~
+            default_target_path: root
             form_login:
                 login_path:  account_login
                 check_path:  account_login_check

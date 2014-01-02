@@ -1,4 +1,4 @@
-dahlberg_podr_homepage:
+root:
     pattern:  /
     defaults: { _controller: DahlbergPodrBundle:Default:index }
 
