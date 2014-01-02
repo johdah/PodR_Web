@@ -23,9 +23,53 @@
                 <img src="{{ episode.getPodcast.getItunesImage }}">
             </a>
             {% endif %}
+            <h3>Episode information</h3>
+            {% if episode.getItunesExplicit %}
+            <p>Parental Advisory</p>
+            {% endif %}
+            <h5>Links</h5>
         </div>
         <div class="large-8 columns">
-            <h1>{{ episode.getTitle }}</h1>
+            <h1><small id="episode_id">#{{ episode.getId }} </small> {{ episode.getTitle }}</h1>
+            {% if episode.getItunesAuthor %}
+            <h4>{{ episode.getPodcast.getTitle }} - {{ episode.getItunesAuthor }}</h4>
+            {% elseif episode.getPodcast.getItunesAuthor %}
+            <h4>{{ episode.getPodcast.getTitle }} - {{ podcast.getItunesAuthor }}</h4>
+            {% else %}
+            <h4>{{ episode.getPodcast.getTitle }}</h4>
+            {% endif %}
+
+            <p><em>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</em></p>
+
+            {% if episode.getItunesBlock %}
+                <div data-alert class="alert-box warning radius">
+                    This episode is marked as blocked by the author
+                </div>
+            {% endif %}
+            {% if episode.getItunesIsClosedCaption %}
+                <div data-alert class="alert-box secondary radius">
+                    This episode is closed caption
+                </div>
+            {% endif %}
+
+            <div class="panel">
+                <h5>Description</h5>
+                {% if episode.getItunesSummary %}
+                    <p>{{ episode.getItunesSummary }}</p>
+                {% elseif episode.getItunesSubtitle %}
+                    <p>{{ episode.getItunesSubtitle }}</p>
+                {% else %}
+                    <p>No description available</p>
+                {% endif %}
+            </div>
+
+            <p>
+                <a href="#" class="medium success radius button split">Play <span data-dropdown="drop"></span></a><br>
+                <ul id="drop" class="f-dropdown" data-dropdown-content>
+                    <li><a href="{{ episode.getEnclosureUrl }}" download="{{ episode.getTitle }}">Download</a></li>
+                </ul>
+            </p>
+            <p>Duration: {{ episode.getItunesDuration }} <span id="enclosure_type">({{ episode.getEnclosureType }})</span></p>
         </div>
     </div>
 {% endblock %}

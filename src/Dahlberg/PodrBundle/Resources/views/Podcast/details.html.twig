@@ -18,6 +18,7 @@
                 <img src="{{ podcast.getItunesImage }}">
             </a>
             {% endif %}
+            <h3>Podcast information</h3>
             <p>Last updated: {{ podcast.getDateUpdated|date('Y-m-d') }}</p>
             <p>Language: {{ podcast.getLanguage }}</p>
             {% if podcast.getItunesExplicit %}
