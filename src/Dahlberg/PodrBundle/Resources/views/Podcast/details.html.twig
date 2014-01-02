@@ -11,12 +11,69 @@
             <a class="current">{{ podcast.getTitle }}</a>
         </nav>
     </div>
-    <div class="row">
+    <div class="row podcast-details">
         <div class="large-4 columns">
+            {% if podcast.getItunesImage %}
+            <a class="th radius" href="{{ podcast.getItunesImage }}">
+                <img src="{{ podcast.getItunesImage }}">
+            </a>
+            {% endif %}
+            <p>Last updated: {{ podcast.getDateUpdated|date('Y-m-d') }}</p>
+            <p>Language: {{ podcast.getLanguage }}</p>
+            {% if podcast.getItunesExplicit %}
+            <p>Parental Advisory</p>
+            {% endif %}
+            <h3>Owner</h3>
+            <p><a href="mailto:{{ podcast.getItunesOwnerEmail }}">{{ podcast.getItunesOwnerName }}</a></p>
+            <p>&copy; {{ podcast.getCopyright }}</p>
+            <h5>Links</h5>
+            <p><a href="{{ podcast.getLink }}">Website</a></p>
         </div>
         <div class="large-8 columns">
             <h1>{{ podcast.getTitle }}</h1>
             <h4>{{ podcast.getItunesAuthor }}</h4>
+
+            {% if podcast.getItunesComplete %}
+            <div data-alert class="alert-box warning radius">
+                This podcast is discontinued
+            </div>
+            {% endif %}
+
+            <div class="panel">
+                <h5>Description</h5>
+                {% if podcast.getItunesSummary %}
+                <p>{{ podcast.getItunesSummary }}</p>
+                {% elseif podcast.getItunesSubtitle %}
+                <p>{{ podcast.getItunesSubtitle }}</p>
+                {% else %}
+                <p>No description available</p>
+                {% endif %}
+            </div>
+
+            <a href="{{ path('podcast_update', {'id': podcast.getId}) }}" class="button tiny round right secondary">Update</a>
+            <h3>Episodes</h3>
+            {% if podcast.getEpisodes.isEmpty %}
+            <div data-alert class="alert-box info radius">
+                There are no episodes
+            </div>
+            {% else %}
+            <table class="large-12">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th width="100">Published</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for episode in podcast.getEpisodes %}
+                    <tr>
+                        <td>{{ episode.getTitle }}</td>
+                        <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
