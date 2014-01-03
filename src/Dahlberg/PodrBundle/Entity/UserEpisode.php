@@ -20,7 +20,7 @@ class UserEpisode {
     /**
      * @ORM\Column(type="boolean")
      */
-    private $archived = false;
+    private $archived = true;
 
     /**
      * @ORM\Column(name="current_position", type="integer")
