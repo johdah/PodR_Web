@@ -8,12 +8,16 @@ class DefaultController extends Controller {
     public function dashboardAction() {
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
+
+        $latestUnreadEpisodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findLatestUnreadEpisodes($user);
         $mostLikedPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findMostLikedPodcasts($user);
         $mostUnreadPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findMostUnreadPodcasts($user);
 
         return $this->render('DahlbergPodrBundle:Default:dashboard.html.twig', array(
+            'latestUnreadEpisodes' => $latestUnreadEpisodes,
             'mostLikedPodcasts' => $mostLikedPodcasts,
             'mostUnreadPodcasts' => $mostUnreadPodcasts,
         ));

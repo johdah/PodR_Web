@@ -17,12 +17,11 @@
             <div class="large-6 columns">
                 <h4>Most liked Podcasts</h4>
                 {% if mostLikedPodcasts %}
-                <table>
+                <table class="large-12">
                     <thead>
                     <tr>
-                        <th width="200">Title</th>
-                        <th width="150">Rate</th>
-                        <th></th>
+                        <th>Title</th>
+                        <th width="100">Rate</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,7 +39,26 @@
             </div>
             <div class="large-6 columns">
                 <h4>Last unread Episodes</h4>
-                <p>Soon available</p>
+                {% if latestUnreadEpisodes %}
+                <table class="large-12">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th width="100">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for episode in latestUnreadEpisodes %}
+                        <tr>
+                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No episodes found.</p>
+                {% endif %}
             </div>
         </div>
 
@@ -48,25 +66,24 @@
             <div class="large-6 columns">
                 <h4>Most unread Podcasts</h4>
                 {% if mostLikedPodcasts %}
-                    <table>
-                        <thead>
+                <table class="large-12">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th width="100">Unread</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for podcast in mostUnreadPodcasts %}
                         <tr>
-                            <th width="200">Title</th>
-                            <th width="150">Unread</th>
-                            <th></th>
+                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                            <td>{{ podcast.getCount }}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for podcast in mostUnreadPodcasts %}
-                            <tr>
-                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
-                                <td>{{ podcast.getCount }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    {% endfor %}
+                    </tbody>
+                </table>
                 {% else %}
-                    <p>No podcasts found.</p>
+                <p>No podcasts found.</p>
                 {% endif %}
             </div>
             <div class="large-6 columns">

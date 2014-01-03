@@ -7,7 +7,27 @@ use Doctrine\ORM\NoResultException;
 
 class UserEpisodeRepository extends EntityRepository {
     /**
-     * TODO: Known error when rating is negative
+     * @param $user
+     * @return array|null
+     */
+    public function findLatestUnreadEpisodes($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 WHERE ue.user = :user and ue.unread = true
+                 ORDER BY e.publishedDate DESC')
+            ->setMaxResults(10)
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
      * @param $user
      * @return array|null
      */
@@ -29,6 +49,7 @@ class UserEpisodeRepository extends EntityRepository {
             return null;
         }
     }
+
     /**
      * @param $user
      * @return array|null
