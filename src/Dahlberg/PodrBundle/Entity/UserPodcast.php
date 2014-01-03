@@ -49,6 +49,10 @@ class UserPodcast {
      */
     private $dateUpdated;
 
+    public function __construct() {
+        $this->dateUpdated = new \DateTime('NOW');
+    }
+
     /**
      * Get id
      *

@@ -60,6 +60,7 @@ class UserEpisode {
     private $dateUpdated;
 
     public function __construct() {
+        $this->dateUpdated = new \DateTime('NOW');
         $this->unread = true;
     }
 
