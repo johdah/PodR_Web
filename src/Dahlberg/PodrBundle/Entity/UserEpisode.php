@@ -35,7 +35,7 @@ class UserEpisode {
     /**
      * @ORM\Column(type="boolean")
      */
-    private $starred = false;
+    private $stashed = false;
 
     /**
      * @ORM\Column(type="boolean")
@@ -58,6 +58,10 @@ class UserEpisode {
      * @ORM\Column(name="date_updated", type="datetime")
      */
     private $dateUpdated;
+
+    public function __construct() {
+        $this->unread = true;
+    }
 
     /**
      * Get id
@@ -139,26 +143,26 @@ class UserEpisode {
     }
 
     /**
-     * Set starred
+     * Set stashed
      *
-     * @param boolean $starred
+     * @param boolean $stashed
      * @return UserEpisode
      */
-    public function setStarred($starred)
+    public function setStashed($stashed)
     {
-        $this->starred = $starred;
+        $this->stashed = $stashed;
 
         return $this;
     }
 
     /**
-     * Get starred
+     * Get stashed
      *
      * @return boolean
      */
-    public function getStarred()
+    public function getStashed()
     {
-        return $this->starred;
+        return $this->stashed;
     }
 
     /**

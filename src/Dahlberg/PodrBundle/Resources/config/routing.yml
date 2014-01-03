@@ -26,9 +26,37 @@ account_register:
     defaults: { _controller: DahlbergPodrBundle:Account:register }
 
 # Episode
+episode_archive:
+    path:     /episode/{id}/archive
+    defaults: { _controller: DahlbergPodrBundle:Episode:archive }
+
 episode_details:
     path:     /episode/{id}
     defaults: { _controller: DahlbergPodrBundle:Episode:details }
+
+episode_dislike:
+    path:     /episode/{id}/dislike
+    defaults: { _controller: DahlbergPodrBundle:Episode:dislike }
+
+episode_like:
+    path:     /episode/{id}/like
+    defaults: { _controller: DahlbergPodrBundle:Episode:like }
+
+episode_restore:
+    path:     /episode/{id}/restore
+    defaults: { _controller: DahlbergPodrBundle:Episode:restore }
+
+episode_stash:
+    path:     /episode/{id}/stash
+    defaults: { _controller: DahlbergPodrBundle:Episode:stash }
+
+episode_unstash:
+    path:     /episode/{id}/unstash
+    defaults: { _controller: DahlbergPodrBundle:Episode:unstash }
+
+episode_updatetime:
+    path:     /episode/{id}/updatetime/{time}
+    defaults: { _controller: DahlbergPodrBundle:Episode:updateTime, time: -1 }
 
 # Podcast
 podcast_details:

@@ -23,6 +23,26 @@
                 <img src="{{ episode.getPodcast.getItunesImage }}">
             </a>
             {% endif %}
+            <div class="row">
+                <div class="large-12 text-center columns">
+                    <ul class="button-group round">
+                        {% if userEpisode and userEpisode.getArchived %}
+                            <li><a href="{{ path('episode_restore', {'id': episode.getId}) }}" class="button tiny success">Add</a></li>
+                        {% else %}
+                            <li><a href="{{ path('episode_archive', {'id': episode.getId}) }}" class="button tiny alert">Archive</a></li>
+                        {% endif %}
+
+                        <li><a href="{{ path('episode_like', {'id': episode.getId}) }}" class="button tiny secondary {% if userEpisode and userEpisode.getRating == 1 %}disabled{% endif %}">Like</a></li>
+                        <li><a href="{{ path('episode_dislike', {'id': episode.getId}) }}" class="button tiny secondary {% if userEpisode and userEpisode.getRating == -1 %}disabled{% endif %}">Dislike</a></li>
+
+                        {% if userEpisode and userEpisode.getStashed %}
+                            <li><a href="{{ path('episode_unstash', {'id': episode.getId}) }}" class="button tiny alert">Unstash</a></li>
+                        {% else %}
+                            <li><a href="{{ path('episode_stash', {'id': episode.getId}) }}" class="button tiny success">Stash</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
             <h3>Episode information</h3>
             {% if episode.getItunesExplicit %}
             <p>Parental Advisory</p>
