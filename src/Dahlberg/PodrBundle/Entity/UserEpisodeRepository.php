@@ -72,4 +72,24 @@ class UserEpisodeRepository extends EntityRepository {
             return null;
         }
     }
+    /**
+     * @param $user
+     * @return array|null
+     */
+    public function findOldestUnarchivedEpisodes($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 WHERE ue.user = :user and ue.archived = false
+                 ORDER BY e.publishedDate ASC')
+            ->setMaxResults(10)
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
 }
