@@ -6,6 +6,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
 class UserEpisodeRepository extends EntityRepository {
+    /**
+     * TODO: Known error when rating is negative
+     * @param $user
+     * @return array|null
+     */
     public function findMostLikedPodcasts($user) {
         $query = $this->getEntityManager()
             ->createQuery(
