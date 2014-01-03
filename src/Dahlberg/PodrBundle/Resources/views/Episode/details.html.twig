@@ -8,7 +8,7 @@
         <nav class="breadcrumbs">
             <a href="{{ path('root') }}">Home</a>
             <a href="{{ path('podcast_index') }}">Podcasts</a>
-            <a href="{{ path('podcast_update', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle }}</a>
+            <a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle }}</a>
             <a class="current">{{ episode.getTitle }}</a>
         </nav>
     </div>
