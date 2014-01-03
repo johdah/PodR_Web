@@ -131,7 +131,7 @@ class EpisodeController extends Controller {
             ->find($episodeId);
 
         if(!$episode)
-            throw $this->createNotFoundException('The podcast does not exist');
+            throw $this->createNotFoundException('The episode does not exist');
 
         $userEpisode = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:UserEpisode')

@@ -23,7 +23,7 @@ class UserPodcast {
     private $following = false;
 
     /**
-     * @ORM\Column(type="integer", length=0)
+     * @ORM\Column(type="integer", length=1)
      */
     private $rating = 0;
 

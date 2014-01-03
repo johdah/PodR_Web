@@ -23,12 +23,12 @@ class UserEpisode {
     private $archived = false;
 
     /**
-     * @ORM\Column(name="current_time", type="integer", length=0)
+     * @ORM\Column(name="current_position", type="integer")
      */
-    private $currentTime = 0;
+    private $currentPosition = -1;
 
     /**
-     * @ORM\Column(type="integer", length=0)
+     * @ORM\Column(type="integer", length=1)
      */
     private $rating = 0;
 
@@ -61,7 +61,6 @@ class UserEpisode {
 
     public function __construct() {
         $this->dateUpdated = new \DateTime('NOW');
-        $this->unread = true;
     }
 
     /**
@@ -98,26 +97,26 @@ class UserEpisode {
     }
 
     /**
-     * Set currentTime
+     * Set currentPosition
      *
-     * @param integer $currentTime
+     * @param integer $currentPosition
      * @return UserEpisode
      */
-    public function setCurrentTime($currentTime)
+    public function setCurrentPosition($currentPosition)
     {
-        $this->currentTime = $currentTime;
+        $this->currentPosition = $currentPosition;
 
         return $this;
     }
 
     /**
-     * Get currentTime
+     * Get currentPosition
      *
      * @return integer
      */
-    public function getCurrentTime()
+    public function getCurrentPosition()
     {
-        return $this->currentTime;
+        return $this->currentPosition;
     }
 
     /**
@@ -215,10 +214,10 @@ class UserEpisode {
     /**
      * Set episode
      *
-     * @param \Dahlberg\PodrBundle\Entity\Episode $episode
+     * @param Episode $episode
      * @return UserEpisode
      */
-    public function setEpisode(\Dahlberg\PodrBundle\Entity\Episode $episode = null)
+    public function setEpisode(Episode $episode = null)
     {
         $this->episode = $episode;
 
@@ -228,7 +227,7 @@ class UserEpisode {
     /**
      * Get episode
      *
-     * @return \Dahlberg\PodrBundle\Entity\Episode
+     * @return Episode
      */
     public function getEpisode()
     {
@@ -238,10 +237,10 @@ class UserEpisode {
     /**
      * Set user
      *
-     * @param \Dahlberg\PodrBundle\Entity\User $user
+     * @param User $user
      * @return UserEpisode
      */
-    public function setUser(\Dahlberg\PodrBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -251,7 +250,7 @@ class UserEpisode {
     /**
      * Get user
      *
-     * @return \Dahlberg\PodrBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
