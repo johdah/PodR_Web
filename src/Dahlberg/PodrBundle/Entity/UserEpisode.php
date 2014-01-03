@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Dahlberg\PodrBundle\Entity\Episode;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Dahlberg\PodrBundle\Entity\UserEpisodeRepository")
  * @ORM\Table(name="user_episode")
  */
 class UserEpisode {
