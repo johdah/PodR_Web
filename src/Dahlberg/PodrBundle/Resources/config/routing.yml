@@ -1,6 +1,11 @@
+# Default
 root:
     pattern:  /
     defaults: { _controller: DahlbergPodrBundle:Default:index }
+
+dashboard:
+    pattern:  /dashboard
+    defaults: { _controller: DahlbergPodrBundle:Default:dashboard }
 
 # Account
 account_create:

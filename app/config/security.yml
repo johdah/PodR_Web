@@ -35,5 +35,5 @@ security:
         - { path: ^/account/create, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/account/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/account, roles: ROLE_USER }
-        - { path: ^/hello, roles: ROLE_USER }
+        - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^, roles: IS_AUTHENTICATED_ANONYMOUSLY }
