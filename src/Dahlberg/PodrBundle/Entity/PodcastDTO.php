@@ -5,12 +5,12 @@ namespace Dahlberg\PodrBundle\Entity;
 class PodcastDTO {
     private $id;
     private $title;
-    private $rating;
+    private $count;
 
-    public function __construct($id, $title, $rating) {
+    public function __construct($id, $title, $count) {
         $this->id = $id;
         $this->title = $title;
-        $this->rating = $rating;
+        $this->count = $count;
     }
 
     /**
@@ -48,16 +48,16 @@ class PodcastDTO {
     /**
      * @return mixed
      */
-    public function getRating()
+    public function getCount()
     {
-        return $this->rating;
+        return $this->count;
     }
 
     /**
-     * @param mixed $rating
+     * @param mixed $count
      */
-    public function setRating($rating)
+    public function setCount($count)
     {
-        $this->rating = $rating;
+        $this->count = $count;
     }
 }

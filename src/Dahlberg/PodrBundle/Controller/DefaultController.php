@@ -10,9 +10,12 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $mostLikedPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findMostLikedPodcasts($user);
+        $mostUnreadPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findMostUnreadPodcasts($user);
 
         return $this->render('DahlbergPodrBundle:Default:dashboard.html.twig', array(
             'mostLikedPodcasts' => $mostLikedPodcasts,
+            'mostUnreadPodcasts' => $mostUnreadPodcasts,
         ));
     }
 

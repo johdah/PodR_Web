@@ -13,27 +13,66 @@
     <div class="row">
         <h2>Dashboard</h2>
 
-        <h4>Most liked Podcasts</h4>
-        {% if mostLikedPodcasts %}
-        <table>
-            <thead>
-            <tr>
-                <th width="200">Title</th>
-                <th width="150">Rate</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for podcast in mostLikedPodcasts %}
-                <tr>
-                    <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
-                    <td>{{ podcast.getRating }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No podcasts found.</p>
-        {% endif %}
+        <div class="row">
+            <div class="large-6 columns">
+                <h4>Most liked Podcasts</h4>
+                {% if mostLikedPodcasts %}
+                <table>
+                    <thead>
+                    <tr>
+                        <th width="200">Title</th>
+                        <th width="150">Rate</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for podcast in mostLikedPodcasts %}
+                        <tr>
+                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                            <td>{{ podcast.getCount }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No podcasts found.</p>
+                {% endif %}
+            </div>
+            <div class="large-6 columns">
+                <h4>Last unread Episodes</h4>
+                <p>Soon available</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-6 columns">
+                <h4>Most unread Podcasts</h4>
+                {% if mostLikedPodcasts %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th width="200">Title</th>
+                            <th width="150">Unread</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for podcast in mostUnreadPodcasts %}
+                            <tr>
+                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                                <td>{{ podcast.getCount }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No podcasts found.</p>
+                {% endif %}
+            </div>
+            <div class="large-6 columns">
+                <h4>Oldest unarchived Episodes</h4>
+                <p>Soon available</p>
+            </div>
+        </div>
     </div>
 {% endblock %}

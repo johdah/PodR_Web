@@ -14,12 +14,12 @@ class UserEpisodeRepository extends EntityRepository {
     public function findMostLikedPodcasts($user) {
         $query = $this->getEntityManager()
             ->createQuery(
-                'SELECT NEW DahlbergPodrBundle:PodcastDTO(p.id, p.title, SUM(ue.rating)) FROM DahlbergPodrBundle:UserEpisode ue
+                'SELECT NEW DahlbergPodrBundle:PodcastDTO(p.id, p.title, SUM(ue.rating)), SUM(ue.rating) as sum_rating FROM DahlbergPodrBundle:UserEpisode ue
                  JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
                  JOIN DahlbergPodrBundle:Podcast p WITH e.podcast = p
                  WHERE ue.user = :user
                  GROUP BY p
-                 ORDER BY ue.rating DESC')
+                 ORDER BY sum_rating DESC')
             ->setMaxResults(10)
             ->setParameter('user', $user);
 
@@ -28,11 +28,27 @@ class UserEpisodeRepository extends EntityRepository {
         } catch (NoResultException $e) {
             return null;
         }
+    }
+    /**
+     * @param $user
+     * @return array|null
+     */
+    public function findMostUnreadPodcasts($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT NEW DahlbergPodrBundle:PodcastDTO(p.id, p.title, SUM(ue.unread)), SUM(ue.unread) as num_unread FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 JOIN DahlbergPodrBundle:Podcast p WITH e.podcast = p
+                 WHERE ue.user = :user
+                 GROUP BY p
+                 ORDER BY num_unread DESC')
+            ->setMaxResults(10)
+            ->setParameter('user', $user);
 
-        /*$mostLikedPodcasts = DB::table('user_episode')->where('user_id', Auth::user()->id)
-            ->join('episodes', 'user_episode.episode_id', '=', 'episodes.id')
-            ->join('podcasts', 'episodes.podcast_id', '=', 'podcasts.id')
-            ->select('episodes.podcast_id', 'podcasts.title', DB::raw('SUM(user_episode.rating) as podcast_rating'))
-            ->groupBy('episodes.podcast_id')->take(10)->get();*/
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }
