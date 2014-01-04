@@ -13,3 +13,9 @@
     height: 48px;
     width: 100%;
 }
+
+    #player .player-icon {
+        color: #FFFFFF;
+        font-size: 180%;
+        line-height: 48px;
+    }

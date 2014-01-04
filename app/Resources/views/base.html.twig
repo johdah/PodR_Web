@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     {% stylesheets '@DahlbergPodrBundle/Resources/public/css/foundation.min.css'
+                   '@DahlbergPodrBundle/Resources/public/css/foundation-icons.css'
                    '@DahlbergPodrBundle/Resources/public/css/application.css'
                    filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
@@ -65,7 +66,12 @@
         </section>
     </nav>
     <div id="player">
-
+        <div class="row">
+            <i class="fi-rewind player-icon"></i>
+            <i class="fi-play player-icon"></i>
+            <i class="fi-stop player-icon"></i>
+            <i class="fi-fast-forward player-icon"></i>
+        </div>
     </div>
 
     <div id="page">
