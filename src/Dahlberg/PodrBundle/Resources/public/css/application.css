@@ -2,3 +2,14 @@
 .podcast-details {
     margin-top: 20px;
 }
+
+
+/* Player
+-------------------------------------*/
+#player {
+    background: #333;
+    border-top: 1px solid #555;
+    display: none;
+    height: 48px;
+    width: 100%;
+}
