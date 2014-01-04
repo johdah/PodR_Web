@@ -43,6 +43,10 @@ episode_dislike:
     path:     /episode/{id}/dislike
     defaults: { _controller: DahlbergPodrBundle:Episode:dislike }
 
+episode_index:
+    path:     /episode
+    defaults: { _controller: DahlbergPodrBundle:Episode:index }
+
 episode_like:
     path:     /episode/{id}/like
     defaults: { _controller: DahlbergPodrBundle:Episode:like }

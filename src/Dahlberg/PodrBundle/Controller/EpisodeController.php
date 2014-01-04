@@ -51,6 +51,23 @@ class EpisodeController extends Controller {
 
         return $this->redirect($this->generateUrl('episode_details', array('id' => $id)));
     }
+    public function indexAction() {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $stashed = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findStashedEpisodes($user);
+        $unarchived = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findUnarchivedEpisodes($user);
+        $unread = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findUnreadEpisodes($user);
+
+        return $this->render('DahlbergPodrBundle:Episode:index.html.twig', array(
+            'stashed' => $stashed,
+            'unarchived' => $unarchived,
+            'unread' => $unread,
+        ));
+    }
 
     public function likeAction($id) {
         $em = $this->getDoctrine()->getManager();

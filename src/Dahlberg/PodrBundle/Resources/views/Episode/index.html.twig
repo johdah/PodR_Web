@@ -1,0 +1,90 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Episode/index.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | Episodes{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a class="current">Episodes</a>
+        </nav>
+    </div>
+    <div class="row">
+        <h2>Episodes</h2>
+
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#stashed">Stashed</a></dd>
+            <dd><a href="#unarchived">Unarchived</a></dd>
+            <dd><a href="#unread">Unread</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active large-12" id="stashed">
+                {% if stashed %}
+                <table class="large-12">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th width="130">Published Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for episode in stashed %}
+                        <tr>
+                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>No episodes found.</p>
+                {% endif %}
+            </div>
+            <div class="content large-12" id="unarchived">
+                {% if unarchived %}
+                <table class="large-12">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th width="130">Published Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for episode in unarchived %}
+                        <tr>
+                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No episodes found.</p>
+                {% endif %}
+            </div>
+            <div class="content large-12" id="unread">
+                {% if unread %}
+                <table class="large-12">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th width="130">Published Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for episode in unread %}
+                        <tr>
+                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No episodes found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
