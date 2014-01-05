@@ -9,15 +9,27 @@
     background: #333;
     border-top: 1px solid #555;
     display: none;
-    height: 48px;
     width: 100%;
 }
-    #player .player-icon {
+    #player .row {
+        height: 48px;
+    }
+
+    #player-controls .player-icon {
         color: #FFFFFF;
         font-size: 180%;
         line-height: 48px;
     }
 
-    #player-controls .player-pause {
+    #player-controls #player-pause {
         display: none;
+    }
+
+    #player-episode-info {
+        color: #FFF;
+        line-height: 48px;
+    }
+
+    #player-seekbar {
+        margin-top: 10px;
     }
