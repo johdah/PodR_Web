@@ -67,10 +67,10 @@
     </nav>
     <div id="player">
         <div class="row">
-            <i class="fi-rewind player-icon"></i>
-            <i class="fi-play player-icon"></i>
-            <i class="fi-stop player-icon"></i>
-            <i class="fi-fast-forward player-icon"></i>
+            <i id="player-rewind" class="fi-rewind player-icon"></i>
+            <i id="player-play-pause" class="fi-play player-icon"></i>
+            <i id="player-stop" class="fi-stop player-icon"></i>
+            <i id="player-fast-forward" class="fi-fast-forward player-icon"></i>
         </div>
     </div>
 
@@ -80,7 +80,8 @@
 
     {% javascripts  '@DahlbergPodrBundle/Resources/public/js/jquery.js'
                     '@DahlbergPodrBundle/Resources/public/js/foundation.min.js'
-                    '@DahlbergPodrBundle/Resources/public/js/application.coffee' %}
+                    '@DahlbergPodrBundle/Resources/public/js/application.coffee'
+                    '@DahlbergPodrBundle/Resources/public/js/player.coffee' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 </body>
