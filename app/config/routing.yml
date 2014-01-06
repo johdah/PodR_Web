@@ -2,11 +2,6 @@ dahlberg_podr:
     resource: "@DahlbergPodrBundle/Resources/config/routing.yml"
     prefix:   /
 
-dahlberg_api:
-    type: rest
-    resource: "@DahlbergPodrBundle/Resources/config/routing-api.yml"
-    prefix:   /api
-
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc

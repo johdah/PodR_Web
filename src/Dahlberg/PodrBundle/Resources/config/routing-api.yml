@@ -1,5 +1,0 @@
-# API V1
-episodes:
-    type: rest
-    prefix: /api/v1
-    resource: "@DahlbergPodrBundle/Controller/APIV1EpisodeController.php"
