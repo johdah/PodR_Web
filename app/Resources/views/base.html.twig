@@ -40,6 +40,7 @@
                         </div>
                     </div>
                 </li>
+                <li><a id="player-toggle" class="radius button">Player</a></li>
                 <li class="divider"></li>
                 <li class="has-dropdown">
                     <a href="#">{{ app.user.username }}</a>
@@ -47,7 +48,6 @@
                         <li><a href="{{ path('account_logout') }}">Logout</a></li>
                     </ul>
                 </li>
-                <li><a id="player-toggle" class="radius button">Player</a></li>
                 {% else %}
                 <li><a href="{{ path('account_login') }}">Login</a></li>
                 <li class="active"><a href="{{ path('account_register') }}">Register</a></li>
@@ -59,7 +59,7 @@
             <ul class="left">
                 {% if app.user %}
                 <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ path('podcast_index') }}">Podcasst</a></li>
+                <li><a href="{{ path('podcast_index') }}">Podcast</a></li>
                 <li><a href="{{ path('episode_index') }}">Episodes</a></li>
                 {% endif %}
             </ul>
@@ -78,13 +78,13 @@
                     <li id="player-fast-forward"><i class="fi-next player-icon"></i></li>
                 </ul>
             </div>
-            <div id="player-episode-info" class="small-12 large-9 columns">
+            <div id="player-episode-info" class="show-for-large-up large-9 columns">
                 <div id="player-episode-title" class="small-8 columns">Unknown episode</div>
                 <div id="player-podcast-title" class="small-4 columns">Unknown podcast</div>
             </div>
         </div>
         <div class="row">
-            <div id="player-seekbar" class="progress small-12 success round">
+            <div id="player-seekbar" class="progress small-10 small-centered large-12 success round">
                 <span class="meter" style="width: 55%"></span>
             </div>
         </div>

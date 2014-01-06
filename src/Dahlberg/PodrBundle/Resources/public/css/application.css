@@ -30,6 +30,16 @@
         line-height: 48px;
     }
 
+/* max-width 1025px, small-medium screens */
+@media only screen and (max-width: 64em) {
+    #player-seekbar {
+        margin-top: -10px;
+    }
+}
+
+/* min-width 1025px, large screens */
+@media only screen and (min-width: 64.063em) {
     #player-seekbar {
         margin-top: 10px;
     }
+}

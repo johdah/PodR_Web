@@ -33,7 +33,9 @@ If you get any warnings or recommendations, fix them.
 
 4) Upgrading
 -------------------------------------
+- Run "php app/console cache:clear -e=prod" to clear the cache
 - Run "php app/console assetic:dump --env=prod --no-debug" to dump the css/js resources.
+- Or set permissions 755 on "deploy.sh" and run "./deploy.sh"
 
 5) Troubleshooting
 -------------------------------------
@@ -41,3 +43,4 @@ If you get any warnings or recommendations, fix them.
   Symfony2 DOES NOT work with the module libapache2-mod-php5filter. In order to solve this problem, you have to uninstall libapache2-mod-php5filter. AFter you do that, you have to install libapache2-mod-php5
 - Can't access app_dev.php (not on localhost)
   Add your IP to line #14 in app_dev.php
+- Blank page in app.dev often mean the cache is not working. Remove and add the app/cache folder and set the permissions to 777.
