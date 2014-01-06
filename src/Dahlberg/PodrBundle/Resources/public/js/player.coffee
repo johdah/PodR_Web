@@ -7,6 +7,10 @@ class Player
     console.log "Player - Loading"
     loadEpisode()
 
+    # Event: TimeUpdate
+    $(audio).bind "timeupdate", ->
+      timeUpdate()
+
     $(".play-btn").delegate "button", "click", ->
       id = $(this).attr('id').replace(/[^0-9]/g, '')
       #loadEpisode id
@@ -42,6 +46,13 @@ class Player
     $("#player-stop").on "click", (e) ->
       e.preventDefault()
       stopAudio()
+
+  # Events
+  timeUpdate = ->
+    currentTime = parseInt(audio.currentTime, 10)
+    maxTime = audio.duration
+    currentPercentage = parseInt((currentTime/maxTime)*101)
+    $("#player-seekbar .meter").css "width", currentPercentage + "%"
 
   # Loaders
   loadEpisode = ->
