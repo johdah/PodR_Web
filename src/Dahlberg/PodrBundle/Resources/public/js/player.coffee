@@ -58,15 +58,21 @@ class Player
   # API Functions
   loadEpisode = (id) ->
     currentEpisode = id
+    loadedPosition = 0
     jqxhr = $.getJSON("/api/v1/episode/" + id, ->
     ).done((data)->
       audio.setAttribute "src", data["episode"]["enclosureUrl"]
       audio.setAttribute "type", data["episode"]["enclosureType"]
       $("#player-episode-title").text data["episode"]["title"]
       $("#player-podcast-title").text data["episode"]["podcast"]["title"]
+      loadedPosition = parseInt(data["userEpisode"]["currentPosition"], 10)
     ).fail(->
       console.log "Player - Error occured while loading episode"
     ).always(->
+      audio.addEventListener "canplay", (->
+        console.log "Load position: " + loadedPosition
+        audio.currentTime = loadedPosition
+      ), false
       audio.load()
 
       # Event: TimeUpdate
