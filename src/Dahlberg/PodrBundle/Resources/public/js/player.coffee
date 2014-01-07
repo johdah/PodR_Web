@@ -44,6 +44,19 @@ class Player
       stopAudio()
 
   # Events
+  playbackEnded = ->
+    # API Call: Archive episode
+    jqxhr = $.post("/api/v1/userepisode/patch/" + currentEpisode,
+      archived: "true"
+      currentPosition: -1
+      , ->
+    ).done((data)->
+      console.log "Player - Episode archived"
+    ).fail(->
+      console.log "Player - Error occured while updating current time"
+    ).always(->
+    )
+
   timeUpdate = ->
     currentTime = parseInt(audio.currentTime, 10)
     maxTime = audio.duration
@@ -56,6 +69,7 @@ class Player
       updateCurrentTimeOnServer()
 
   # API Functions
+
   loadEpisode = (id) ->
     currentEpisode = id
     loadedPosition = 0
@@ -76,6 +90,10 @@ class Player
       audio.load()
 
       # Event: TimeUpdate
+      $(audio).bind "ended", ->
+        playbackEnded()
+
+      # Event: TimeUpdate
       $(audio).bind "timeupdate", ->
         timeUpdate()
 
@@ -83,7 +101,7 @@ class Player
     )
 
   updateCurrentTimeOnServer = ->
-    # API Call: Archive episode
+    # API Call: Update current position on server
     jqxhr = $.post("/api/v1/userepisode/patch/" + currentEpisode,
       currentPosition: parseInt(audio.currentTime, 10)
       , ->

@@ -169,15 +169,15 @@ class EpisodeController extends Controller {
         $userEpisode = $this->prepareUserEpisode($id) ;
 
         if($request->request->has('archived'))
-            $userEpisode->setCurrentPosition($request->request->get('archived'));
+            $userEpisode->setArchived($request->request->get('archived') == "true");
         if($request->request->has('currentPosition'))
             $userEpisode->setCurrentPosition($request->request->get('currentPosition'));
         if($request->request->has('rating'))
-            $userEpisode->setCurrentPosition($request->request->get('rating'));
+            $userEpisode->setRating($request->request->get('rating'));
         if($request->request->has('stashed'))
-            $userEpisode->setCurrentPosition($request->request->get('stashed'));
+            $userEpisode->setStashed($request->request->get('stashed'));
         if($request->request->has('unread'))
-            $userEpisode->setCurrentPosition($request->request->get('unread'));
+            $userEpisode->setUnread($request->request->get('unread'));
 
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
