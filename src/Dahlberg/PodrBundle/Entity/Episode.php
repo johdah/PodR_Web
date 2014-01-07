@@ -558,10 +558,24 @@ class Episode implements \JsonSerializable {
     public function jsonSerialize()
     {
         return array(
-            'title'             => $this->title,
-            'enclosure_url'     => $this->enclosureUrl,
-            'enclosure_type'    => $this->enclosureType,
-            'podcast'           => $this->podcast,
+            'id'                        => $this->id,
+            'enclosureLength'           => $this->enclosureLength,
+            'enclosureUrl'              => $this->enclosureUrl,
+            'enclosureType'             => $this->enclosureType,
+            'guid'                      => $this->guid,
+            'publishedDate'             => $this->publishedDate,
+            'title'                     => $this->title,
+            'itunesAuthor'              => $this->itunesAuthor,
+            'itunesBlock'               => $this->itunesBlock,
+            'itunesDuration'            => $this->itunesDuration,
+            'itunesExplicit'            => $this->itunesExplicit,
+            'itunesIsClosedCaoption'    => $this->itunesIsClosedCaption,
+            'itunesImage'               => $this->itunesImage,
+            'itunesSubtitle'            => $this->itunesSubtitle,
+            'itunesSummary'             => $this->itunesSummary,
+            'dateAdded'                 => $this->dateAdded,
+            'dateUpdated'               => $this->dateUpdated,
+            'podcast'                   => $this->podcast,
         );
     }
 }

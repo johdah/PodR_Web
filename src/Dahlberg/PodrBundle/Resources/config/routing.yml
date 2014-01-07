@@ -108,3 +108,6 @@ podcast_update:
 api_v1_get_episode:
     path:     /api/v1/episode/{id}
     defaults: { _controller: DahlbergPodrBundle:Episode:getEpisode }
+api_v1_patch_userepisode:
+    path:     /api/v1/userepisode/patch/{id}
+    defaults: { _controller: DahlbergPodrBundle:Episode:patchUserEpisode }

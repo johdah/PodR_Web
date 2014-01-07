@@ -9,7 +9,7 @@ use Dahlberg\PodrBundle\Entity\Episode;
  * @ORM\Entity(repositoryClass="Dahlberg\PodrBundle\Entity\UserEpisodeRepository")
  * @ORM\Table(name="user_episode")
  */
-class UserEpisode {
+class UserEpisode implements \JsonSerializable {
     /**
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -255,5 +255,25 @@ class UserEpisode {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.4.0)<br/>
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'id'                => $this->id,
+            'archived'          => $this->archived,
+            'currentPosition'   => $this->currentPosition,
+            'rating'            => $this->rating,
+            'stashed'           => $this->stashed,
+            'unread'            => $this->unread,
+            'dateUpdated'       => $this->dateUpdated
+        );
     }
 }

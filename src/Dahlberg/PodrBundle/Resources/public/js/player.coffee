@@ -1,12 +1,12 @@
 class Player
   audio = new Audio
   currentEpisode = -1
+  timeSinceLastUpdate = 0;
 
   constructors: ->
 
   loadPlayer: ->
     console.log "Player - Loading"
-    #loadEpisode()
 
     $(".play-btn").on "click", ->
       id = $(this).attr('id').replace(/[^0-9]/g, '')
@@ -52,28 +52,41 @@ class Player
     currentPercentage = parseInt((currentTime/maxTime)*101)
     $("#player-seekbar .meter").css "width", currentPercentage + "%"
 
-  # Loaders
+    @timeSinceLastTimeUpdate++
+    if @timeSinceLastTimeUpdate > 60
+      @timeSinceLastTimeUpdate = 0
+      updateTimeOnServer()
+
+  # API Functions
   loadEpisode = (id) ->
     currentEpisode = id
     jqxhr = $.getJSON("/api/v1/episode/" + id, ->
     ).done((data)->
-      console.log "Loading: " + data["episode"]["enclosure_url"]
-      audio.setAttribute "src", data["episode"]["enclosure_url"]
-      audio.setAttribute "type", data["episode"]["enclosure_type"]
+      console.log "Loading: " + data["episode"]["enclosureUrl"]
+      audio.setAttribute "src", data["episode"]["enclosureUrl"]
+      audio.setAttribute "type", data["episode"]["enclosureType"]
     ).fail(->
       console.log "Player - Error occured while loading episode"
     ).always(->
       audio.load()
-      #console.log "Player - Load Episode"
-      #audio.setAttribute "src", "http://sverigesradio.se/topsy/ljudfil/4794211.mp3"
-      #audio.setAttribute "type", "audio/mp3"
-      #audio.load()
 
       # Event: TimeUpdate
       $(audio).bind "timeupdate", ->
         timeUpdate()
 
       playAudio()
+    )
+
+  updateCurrentTimeOnServer = ->
+    # API Call: Archive episode
+    jqxhr = $.post("/api/v1/userepisode/patch/" + currentEpisode,
+      currentPosition: parseInt(audio.currentTime, 10)
+      , ->
+    ).done((data)->
+      console.log "Player - Current time updated with: " + data["currentPosition"]
+    ).fail(->
+      console.log "Player - Error occured while updating current time"
+    ).always(->
     )
 
   # Actions
@@ -94,12 +107,11 @@ class Player
     console.log "Player - Pause"
     $("#player-pause").hide()
     $("#player-play").show()
-    #updateCurrentTimeOnServer()
+    updateCurrentTimeOnServer()
 
   playAudio = ->
     audio.play()
     console.log "Player - Play"
-    #$("#player-seekbar").attr "aria-valuemax", audio.duration
     $("#player-pause").show()
     $("#player-play").hide()
 
@@ -107,12 +119,10 @@ class Player
     audio.pause()
     audio.currentTime = 0
     console.log "Player - Stop"
-    #currentTime = 0
     $("#player-pause").hide()
     $("#player-play").show()
-    #updateCurrentTimeOnServer()
+    updateCurrentTimeOnServer()
 
 $(document).ready ->
-  console.log "Player - Creating"
   player = new Player
   player.loadPlayer()

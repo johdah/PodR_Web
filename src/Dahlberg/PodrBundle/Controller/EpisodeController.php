@@ -143,15 +143,53 @@ class EpisodeController extends Controller {
 
     /* API */
     public function getEpisodeAction($id) {
-        //$user = $this->get('security.context')->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $episode = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:Episode')
             ->find($id);
+        $userEpisode = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findOneBy(array('episode' => $episode, 'user' => $user));
+        if(!$episode)
+            throw $this->createNotFoundException('The episode does not exist');
+        if(!$userEpisode)
+            throw $this->createNotFoundException('The user episode does not exist');
 
         $response = new JsonResponse();
         $response->setData(array(
-            'episode' => $episode,
+            'episode'       => $episode,
+            'userEpisode'   => $userEpisode
         ));
+        return $response;
+    }
+
+    public function patchUserEpisodeAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $userEpisode = $this->prepareUserEpisode($id) ;
+
+        if($request->request->has('archived'))
+            $userEpisode->setCurrentPosition($request->request->get('archived'));
+        if($request->request->has('currentPosition'))
+            $userEpisode->setCurrentPosition($request->request->get('currentPosition'));
+        if($request->request->has('rating'))
+            $userEpisode->setCurrentPosition($request->request->get('rating'));
+        if($request->request->has('stashed'))
+            $userEpisode->setCurrentPosition($request->request->get('stashed'));
+        if($request->request->has('unread'))
+            $userEpisode->setCurrentPosition($request->request->get('unread'));
+
+        $userEpisode->setDateUpdated(new \DateTime('NOW'));
+
+        $em->persist($userEpisode);
+        $em->flush();
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'result'        => 'successfull',
+            'userEpisode'   => $userEpisode,
+        ));
+
         return $response;
     }
 
