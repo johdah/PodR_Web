@@ -44,3 +44,7 @@ If you get any warnings or recommendations, fix them.
 - Can't access app_dev.php (not on localhost)
   Add your IP to line #14 in app_dev.php
 - Blank page in app.dev often mean the cache is not working. Remove and add the app/cache folder and set the permissions to 777.
+
+6) Requirements
+-------------------------------------
+- PHP >= 5.4.0

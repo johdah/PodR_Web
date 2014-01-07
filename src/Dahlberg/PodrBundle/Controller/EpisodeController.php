@@ -4,6 +4,8 @@ namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\UserEpisode;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 class EpisodeController extends Controller {
     public function archiveAction($id) {
@@ -137,6 +139,20 @@ class EpisodeController extends Controller {
         $em->flush();
 
         return $this->redirect($this->generateUrl('episode_details', array('id' => $id)));
+    }
+
+    /* API */
+    public function getEpisodeAction($id) {
+        //$user = $this->get('security.context')->getToken()->getUser();
+        $episode = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:Episode')
+            ->find($id);
+
+        $response = new JsonResponse();
+        $response->setData(array(
+            'episode' => json_encode($episode),
+        ));
+        return $response;
     }
 
     /* NOT ACTIONS */

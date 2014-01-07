@@ -103,3 +103,8 @@ podcast_unstar:
 podcast_update:
     path:      /podcast/{id}/update
     defaults:  { _controller: DahlbergPodrBundle:Podcast:update }
+
+# API V1
+api_v1_get_episode:
+    path:     /api/v1/episode/{id}
+    defaults: { _controller: DahlbergPodrBundle:Episode:getEpisode }
