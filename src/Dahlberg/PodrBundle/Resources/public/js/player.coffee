@@ -6,8 +6,6 @@ class Player
   constructors: ->
 
   loadPlayer: ->
-    console.log "Player - Loading"
-
     $(".play-btn").on "click", ->
       id = $(this).attr('id').replace(/[^0-9]/g, '')
       console.log "Playing episode " + id
@@ -55,16 +53,17 @@ class Player
     @timeSinceLastTimeUpdate++
     if @timeSinceLastTimeUpdate > 60
       @timeSinceLastTimeUpdate = 0
-      updateTimeOnServer()
+      updateCurrentTimeOnServer()
 
   # API Functions
   loadEpisode = (id) ->
     currentEpisode = id
     jqxhr = $.getJSON("/api/v1/episode/" + id, ->
     ).done((data)->
-      console.log "Loading: " + data["episode"]["enclosureUrl"]
       audio.setAttribute "src", data["episode"]["enclosureUrl"]
       audio.setAttribute "type", data["episode"]["enclosureType"]
+      $("#player-episode-title").text data["episode"]["title"]
+      $("#player-podcast-title").text data["episode"]["podcast"]["title"]
     ).fail(->
       console.log "Player - Error occured while loading episode"
     ).always(->
@@ -83,7 +82,6 @@ class Player
       currentPosition: parseInt(audio.currentTime, 10)
       , ->
     ).done((data)->
-      console.log "Player - Current time updated with: " + data["currentPosition"]
     ).fail(->
       console.log "Player - Error occured while updating current time"
     ).always(->
@@ -104,21 +102,18 @@ class Player
 
   pauseAudio = ->
     audio.pause()
-    console.log "Player - Pause"
     $("#player-pause").hide()
     $("#player-play").show()
     updateCurrentTimeOnServer()
 
   playAudio = ->
     audio.play()
-    console.log "Player - Play"
     $("#player-pause").show()
     $("#player-play").hide()
 
   stopAudio = ->
     audio.pause()
     audio.currentTime = 0
-    console.log "Player - Stop"
     $("#player-pause").hide()
     $("#player-play").show()
     updateCurrentTimeOnServer()

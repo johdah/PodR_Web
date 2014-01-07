@@ -29,6 +29,12 @@
         color: #FFF;
         line-height: 48px;
     }
+        #player-episode-title,
+        #player-podcast-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
 /* max-width 1025px, small-medium screens */
 @media only screen and (max-width: 64em) {
