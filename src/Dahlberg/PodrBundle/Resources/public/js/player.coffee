@@ -1,19 +1,17 @@
 class Player
   audio = new Audio
+  currentEpisode = -1
 
   constructors: ->
 
   loadPlayer: ->
     console.log "Player - Loading"
-    loadEpisode()
+    #loadEpisode()
 
-    # Event: TimeUpdate
-    $(audio).bind "timeupdate", ->
-      timeUpdate()
-
-    $(".play-btn").delegate "button", "click", ->
+    $(".play-btn").on "click", ->
       id = $(this).attr('id').replace(/[^0-9]/g, '')
-      #loadEpisode id
+      console.log "Playing episode " + id
+      loadEpisode id
 
     # Forward
     $("#player-forward").on "click", (e) ->
@@ -55,12 +53,28 @@ class Player
     $("#player-seekbar .meter").css "width", currentPercentage + "%"
 
   # Loaders
-  loadEpisode = ->
-    console.log "Player - Load Episode"
-    audio.setAttribute "src", "http://sverigesradio.se/topsy/ljudfil/4794211.mp3"
-    audio.setAttribute "type", "audio/mp3"
-    audio.load()
+  loadEpisode = (id) ->
+    currentEpisode = id
+    jqxhr = $.getJSON("/api/v1/episode/" + id, ->
+    ).done((data)->
+      console.log "Loading: " + data["episode"]["enclosure_url"]
+      audio.setAttribute "src", data["episode"]["enclosure_url"]
+      audio.setAttribute "type", data["episode"]["enclosure_type"]
+    ).fail(->
+      console.log "Player - Error occured while loading episode"
+    ).always(->
+      audio.load()
+      #console.log "Player - Load Episode"
+      #audio.setAttribute "src", "http://sverigesradio.se/topsy/ljudfil/4794211.mp3"
+      #audio.setAttribute "type", "audio/mp3"
+      #audio.load()
 
+      # Event: TimeUpdate
+      $(audio).bind "timeupdate", ->
+        timeUpdate()
+
+      playAudio()
+    )
 
   # Actions
   fastRewindAudio = ->

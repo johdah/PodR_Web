@@ -150,7 +150,7 @@ class EpisodeController extends Controller {
 
         $response = new JsonResponse();
         $response->setData(array(
-            'episode' => json_encode($episode),
+            'episode' => $episode,
         ));
         return $response;
     }

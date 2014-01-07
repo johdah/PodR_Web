@@ -558,8 +558,10 @@ class Episode implements \JsonSerializable {
     public function jsonSerialize()
     {
         return array(
-            'title'         => $this->title,
-            'podcast'       => json_encode($this->podcast),
+            'title'             => $this->title,
+            'enclosure_url'     => $this->enclosureUrl,
+            'enclosure_type'    => $this->enclosureType,
+            'podcast'           => $this->podcast,
         );
     }
 }

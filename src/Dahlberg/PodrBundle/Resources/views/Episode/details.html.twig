@@ -84,7 +84,7 @@
             </div>
 
             <p>
-                <a href="#" class="medium success radius button split">Play <span data-dropdown="drop"></span></a><br>
+                <a id="episode-{{ episode.getId }}" class="play-btn medium success radius button split">Play <span data-dropdown="drop"></span></a><br>
                 <ul id="drop" class="f-dropdown" data-dropdown-content>
                     <li><a href="{{ episode.getEnclosureUrl }}" download="{{ episode.getTitle }}">Download</a></li>
                 </ul>
