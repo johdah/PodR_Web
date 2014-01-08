@@ -1,6 +1,5 @@
 <?php
 // src/Dahlberg/PodrBundle/Lib/DateTimeParser.php;
-
 namespace Dahlberg\PodrBundle\Lib;
 
 class DateTimeParser {
@@ -12,4 +11,8 @@ class DateTimeParser {
 
         return $seconds;
     }
+
+    public static function secondsToTime($totalSeconds) {
+    }
+
 }

@@ -5,3 +5,7 @@ services:
 #    dahlberg_podr.example:
 #        class: %dahlberg_podr.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+  dahlberg_podr.twig.podr_extension:
+    class: Dahlberg\PodrBundle\Twig\PodrExtension
+    tags:
+        - { name: twig.extension }

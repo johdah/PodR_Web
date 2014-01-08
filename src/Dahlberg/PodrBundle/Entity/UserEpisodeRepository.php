@@ -98,6 +98,26 @@ class UserEpisodeRepository extends EntityRepository {
      * @param $user
      * @return array|null
      */
+    public function findStartedEpisodes($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT ue FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 WHERE ue.user = :user and ue.archived = false
+                 ORDER BY ue.currentPosition DESC')
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $user
+     * @return array|null
+     */
     public function findStashedEpisodes($user) {
         $query = $this->getEntityManager()
             ->createQuery(
