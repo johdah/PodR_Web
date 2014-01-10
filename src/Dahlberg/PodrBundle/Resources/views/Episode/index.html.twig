@@ -44,7 +44,8 @@
                             {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
                                         {% else %}-{% endif %}</p></div>
@@ -83,7 +84,8 @@
                                 {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
                                         {% else %}-{% endif %}</p></div>
@@ -122,7 +124,8 @@
                                 {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
                                         {% else %}-{% endif %}</p></div>
