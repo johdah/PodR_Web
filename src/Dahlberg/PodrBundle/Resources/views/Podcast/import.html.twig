@@ -5,6 +5,15 @@
 
 {% block body %}
     <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a href="{{ path('podcast_index') }}">Podcasts</a>
+            <a class="current">Import</a>
+        </nav>
+    </div>
+    <div class="row">
+        <h2>Import podcasts</h2>
+        <p>Importing pods are super easy! Simply upload your OPML file with all the pods and we'll do the rest.</p>
         {{ form(form) }}
     </div>
 {% endblock %}
