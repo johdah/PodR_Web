@@ -49,3 +49,11 @@
         margin-top: 10px;
     }
 }
+
+/* Podcast
+-------------------------------------*/
+.podcast-table .podcast-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

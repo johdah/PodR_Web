@@ -15,18 +15,29 @@
         <h2>Podcasts</h2>
 
         {% if podcasts %}
-        <table>
+        <table class="podcast-table">
             <thead>
                 <tr>
-                    <th width="200">Title</th>
+                    <th width="200"></th>
+                    <th>Title</th>
                     <th width="150">Last Updated</th>
-                    <th></th>
+                    <th width="100"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for podcast in podcasts %}
                 <tr>
-                    <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                    <td>
+                        {% if podcast.getItunesImage %}
+                        <a class="th round" href="{{ podcast.getItunesImage }}">
+                            <img src="{{ podcast.getItunesImage }}">
+                        </a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></h4></div>
+                        <div class="podcast-description"><p>{{ podcast.getDescription[:240] }}</p></div>
+                    </td>
                     <td>{% if podcast.getDateUpdated %}{{ podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
                     <td><a href="{{ path('podcast_update', {'id': podcast.getId}) }}" class="button tiny round">Update</a></td>
                 </tr>
