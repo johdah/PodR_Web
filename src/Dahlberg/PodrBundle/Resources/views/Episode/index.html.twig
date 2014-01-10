@@ -21,9 +21,10 @@
         <div class="tabs-content">
             <div class="content active large-12" id="stashed">
                 {% if stashed %}
-                <table class="large-12">
+                <table class="episode-table">
                     <thead>
                     <tr>
+                        <th width="200"></th>
                         <th>Title</th>
                         <th width="130">Published Date</th>
                     </tr>
@@ -31,7 +32,23 @@
                     <tbody>
                     {% for episode in stashed %}
                         <tr>
-                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td class="episode-image">
+                            {% if episode.getItunesImage %}
+                                <a class="th round" href="{{ episode.getItunesImage }}">
+                                    <img src="{{ episode.getItunesImage }}">
+                                </a>
+                            {% elseif episode.getPodcast.getItunesImage %}
+                                <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                    <img src="{{ episode.getPodcast.getItunesImage }}">
+                                </a>
+                            {% endif %}
+                            </td>
+                            <td class="episode-info">
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                        {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                        {% else %}-{% endif %}</p></div>
+                            </td>
                             <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                         </tr>
                     {% endfor %}
@@ -43,9 +60,10 @@
             </div>
             <div class="content large-12" id="unarchived">
                 {% if unarchived %}
-                <table class="large-12">
+                <table class="episode-table">
                     <thead>
                     <tr>
+                        <th width="200"></th>
                         <th>Title</th>
                         <th width="130">Published Date</th>
                     </tr>
@@ -53,7 +71,23 @@
                     <tbody>
                     {% for episode in unarchived %}
                         <tr>
-                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                            <td class="episode-image">
+                                {% if episode.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getItunesImage }}">
+                                        <img src="{{ episode.getItunesImage }}">
+                                    </a>
+                                {% elseif episode.getPodcast.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                        <img src="{{ episode.getPodcast.getItunesImage }}">
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td class="episode-info">
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                        {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                        {% else %}-{% endif %}</p></div>
+                            </td>
                             <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                         </tr>
                     {% endfor %}
@@ -65,9 +99,10 @@
             </div>
             <div class="content large-12" id="unread">
                 {% if unread %}
-                <table class="large-12">
+                <table class="episode-table">
                     <thead>
                     <tr>
+                        <th width="200"></th>
                         <th>Title</th>
                         <th width="130">Published Date</th>
                     </tr>
@@ -75,8 +110,24 @@
                     <tbody>
                     {% for episode in unread %}
                         <tr>
-                            <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
-                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                            <td class="episode-image">
+                                {% if episode.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getItunesImage }}">
+                                        <img src="{{ episode.getItunesImage }}">
+                                    </a>
+                                {% elseif episode.getPodcast.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                        <img src="{{ episode.getPodcast.getItunesImage }}">
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td class="episode-info">
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></h4></div>
+                                <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                        {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                        {% else %}-{% endif %}</p></div>
+                            </td>
+                            <td class="episode-quick-actions">{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

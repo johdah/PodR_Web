@@ -52,8 +52,8 @@
 
 /* Podcast
 -------------------------------------*/
-.podcast-table .podcast-title {
+.podcast-table .podcast-title,
+.episode-table .episode-title {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
