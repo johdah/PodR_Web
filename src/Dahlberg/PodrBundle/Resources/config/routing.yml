@@ -68,6 +68,14 @@ episode_updatetime:
     defaults: { _controller: DahlbergPodrBundle:Episode:updateTime, time: -1 }
 
 # Podcast
+podcast_index:
+    path:     /podcast
+    defaults: { _controller: DahlbergPodrBundle:Podcast:index }
+
+podcast_import:
+    path:     /podcast/import
+    defaults: { _controller: DahlbergPodrBundle:Podcast:import }
+
 podcast_details:
     path:     /podcast/{id}
     defaults: { _controller: DahlbergPodrBundle:Podcast:details }
@@ -79,10 +87,6 @@ podcast_dislike:
 podcast_follow:
     path:      /podcast/{id}/follow
     defaults:  { _controller: DahlbergPodrBundle:Podcast:follow }
-
-podcast_index:
-    path:     /podcast
-    defaults: { _controller: DahlbergPodrBundle:Podcast:index }
 
 podcast_like:
     path:      /podcast/{id}/like

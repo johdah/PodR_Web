@@ -28,7 +28,7 @@ If you get any warnings or recommendations, fix them.
 -------------------------------------
 - Install the vendors by running: "php composer.phar install"
 - Copy parameters.yml.dist to parameters.yml and update the settings
-- Chmod 777 app/cache and app/logs
+- Chmod 777 app/cache, app/logs and web/uploads
 - Setup DB with the command "php app/console doctrine:schema:update --force"
 
 4) Upgrading

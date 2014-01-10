@@ -8,6 +8,7 @@ use Dahlberg\PodrBundle\Entity\UserPodcast;
 use Dahlberg\PodrBundle\Lib\PodcastParser;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -54,6 +55,48 @@ class PodcastController extends Controller {
         $em->flush();
 
         return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
+    }
+
+    public function importAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createFormBuilder()
+            ->add('opmlfile', 'file', array(
+                'required' => true
+            ))
+            ->add('save', 'submit')
+            ->getForm();
+        $form->handleRequest($request);
+        $formSuccess = null;
+
+        if ($form->isValid()) {
+            $fs = new Filesystem();
+            $file = $form->get('opmlfile')->getData();
+
+            $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/opmlimport';
+            $filename = rand(1, 99999).'.opml';
+            $file->move($dir, $filename);
+
+            $fs->remove($dir . '/' . $filename);
+            // TODO: Foreach Podcast
+
+            //$podcast = new Podcast();
+            //$podcast->setFeedurl($form->get('feedurl')->getData());
+
+            //$em->persist($podcast);
+            // TODO: Need to check if podcast already exists in a better way
+            try {
+                //$em->flush();
+                $formSuccess = "Podcast added!";
+            } catch(DBALException $e) {
+                $form->addError(new FormError("Can't add that podcast. Maybe it already exists"));
+            }
+        }
+
+        return $this->render('DahlbergPodrBundle:Podcast:import.html.twig', array(
+            'form' => $form->createView(),
+            'formSuccess' => $formSuccess
+        ));
     }
 
     public function indexAction(Request $request)
