@@ -5,10 +5,12 @@ namespace Dahlberg\PodrBundle\Controller;
 use Dahlberg\PodrBundle\Entity\Episode;
 use Dahlberg\PodrBundle\Entity\Podcast;
 use Dahlberg\PodrBundle\Entity\UserPodcast;
+use Dahlberg\PodrBundle\Lib\OpmlParser;
 use Dahlberg\PodrBundle\Lib\PodcastParser;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -71,22 +73,41 @@ class PodcastController extends Controller {
 
         if ($form->isValid()) {
             $fs = new Filesystem();
+            $user = $this->get('security.context')->getToken()->getUser();
             $file = $form->get('opmlfile')->getData();
 
             $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/opmlimport';
             $filename = rand(1, 99999).'.opml';
             $file->move($dir, $filename);
 
-            $fs->remove($dir . '/' . $filename);
+            $parser = new OpmlParser($dir . '/' . $filename);
+
             // TODO: Foreach Podcast
+            if($parser->errors == null) {
+                while($parser->hasNext()) {
+                    $parser->next();
 
-            //$podcast = new Podcast();
-            //$podcast->setFeedurl($form->get('feedurl')->getData());
+                    if($this->getDoctrine()->getRepository('DahlbergPodrBundle:Podcast')->findOneByFeedurl($parser->getBodyXmlUrl()) != null) continue;
+                    $podcast = new Podcast();
+                    $podcast->setFeedurl($parser->getBodyXmlUrl());
+                    $podcast->setTitle(($parser->getBodyTitle() != null) ? $parser->getBodyTitle() : "Unknown title");
+                    // TODO: Better way to check if podcast is unique?
+                    $em->persist($podcast);
 
-            //$em->persist($podcast);
-            // TODO: Need to check if podcast already exists in a better way
+                    //$this->updater($podcast);
+
+                    $userPodcast = new UserPodcast();
+                    $userPodcast->setUser($user);
+                    $userPodcast->setPodcast($podcast);
+                    $userPodcast->setFollowing(true);
+                    $em->persist($userPodcast);
+                }
+            }
+
+            // Remove the OPML-file
+            $fs->remove($dir . '/' . $filename);
             try {
-                //$em->flush();
+                $em->flush();
                 $formSuccess = "Podcast added!";
             } catch(DBALException $e) {
                 $form->addError(new FormError("Can't add that podcast. Maybe it already exists"));
