@@ -123,6 +123,7 @@ class PodcastController extends Controller {
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
 
         $form = $this->createFormBuilder()
             ->add('feedurl', 'url', array(
@@ -147,9 +148,8 @@ class PodcastController extends Controller {
             }
         }
 
-        $podcasts = $this->getDoctrine()
-            ->getRepository('DahlbergPodrBundle:Podcast')
-            ->findAll();
+        $podcasts = $em->getRepository('DahlbergPodrBundle:UserPodcast')
+            ->findAllPodcastsOrderedByTitle($user);
 
         return $this->render('DahlbergPodrBundle:Podcast:index.html.twig', array(
             'podcasts' => $podcasts,
