@@ -108,6 +108,11 @@ podcast_update:
     path:      /podcast/{id}/update
     defaults:  { _controller: DahlbergPodrBundle:Podcast:update }
 
+# Search
+search_index:
+    path:      /search
+    defaults:  { _controller: DahlbergPodrBundle:Search:index }
+
 # API V1
 api_v1_get_episode:
     path:     /api/v1/episode/{id}
