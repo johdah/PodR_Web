@@ -518,10 +518,10 @@ class Episode implements \JsonSerializable {
     /**
      * Add userEpisodes
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     * @param UserEpisode $userEpisodes
      * @return Episode
      */
-    public function addUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    public function addUserEpisode(UserEpisode $userEpisodes)
     {
         $this->userEpisodes[] = $userEpisodes;
 
@@ -531,11 +531,26 @@ class Episode implements \JsonSerializable {
     /**
      * Remove userEpisodes
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes
+     * @param UserEpisode $userEpisodes
      */
-    public function removeUserEpisode(\Dahlberg\PodrBundle\Entity\UserEpisode $userEpisodes)
+    public function removeUserEpisode(UserEpisode $userEpisodes)
     {
         $this->userEpisodes->removeElement($userEpisodes);
+    }
+
+    /**
+     * Get UserEpisode for a specific user if it exists
+     *
+     * @param $user
+     * @return null
+     */
+    public function getUserEpisode($user) {
+        foreach ($this->userEpisodes as $userepisode) {
+            if($userepisode->getUser()->getId() == $user->getId())
+                return $userepisode;
+        }
+
+        return null;
     }
 
     /**

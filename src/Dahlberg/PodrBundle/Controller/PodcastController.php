@@ -30,6 +30,7 @@ class PodcastController extends Controller {
         return $this->render('DahlbergPodrBundle:Podcast:details.html.twig', array(
             'podcast' => $podcast,
             'userPodcast' => $userPodcast,
+            'user'  => $user
         ));
     }
 
