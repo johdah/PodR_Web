@@ -105,6 +105,7 @@ class UserEpisodeRepository extends EntityRepository {
                  JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
                  WHERE ue.user = :user and ue.archived = false
                  ORDER BY ue.currentPosition DESC')
+            ->setMaxResults(10)
             ->setParameter('user', $user);
 
         try {
