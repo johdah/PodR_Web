@@ -91,7 +91,7 @@
                     <li><a href="{{ episode.getEnclosureUrl }}" download="{{ episode.getTitle }}">Download</a></li>
                 </ul>
             </p>
-            <p>Duration: {{ episode.getItunesDuration }} <span id="enclosure_type">({{ episode.getEnclosureType }})</span></p>
+            <p>Duration: {{ episode.getItunesDuration|secondsToTime }} <span id="enclosure_type">({{ episode.getEnclosureType }})</span></p>
         </div>
     </div>
 {% endblock %}
