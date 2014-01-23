@@ -46,6 +46,7 @@ If you get any warnings or recommendations, fix them.
   Add your IP to line #14 in app_dev.php
 - Blank page in app.dev often mean the cache is not working. Remove and add the app/cache folder and set the permissions to 777.
 - Not able to execute deploy.sh file: /bin/bash^M: bad interpreter is solved by "cat deploy.sh | tr -d '\r' > deploy.sh.new"
+- app/bootstrap.php.cache is not found. Run: "composer update"
 
 6) Requirements
 -------------------------------------
