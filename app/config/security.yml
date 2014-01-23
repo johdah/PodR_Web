@@ -20,7 +20,7 @@ security:
             form_login:
                 check_path:  account_login_check
                 csrf_provider: form.csrf_provider
-                default_target_path: account_index
+                default_target_path: dashboard
                 login_path:  account_login
             logout: ~
             pattern:    ^/
