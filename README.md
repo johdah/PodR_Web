@@ -29,6 +29,7 @@ If you get any warnings or recommendations, fix them.
 - Install the vendors by running: "php composer.phar install"
 - Copy parameters.yml.dist to parameters.yml and update the settings
 - Chmod 777 app/cache, app/logs and web/uploads
+- "chmod +x deploy.sh"
 - Setup DB with the command "php app/console doctrine:schema:update --force"
 
 4) Upgrading
@@ -44,6 +45,7 @@ If you get any warnings or recommendations, fix them.
 - Can't access app_dev.php (not on localhost)
   Add your IP to line #14 in app_dev.php
 - Blank page in app.dev often mean the cache is not working. Remove and add the app/cache folder and set the permissions to 777.
+- Not able to execute deploy.sh file: /bin/bash^M: bad interpreter is solved by "cat deploy.sh | tr -d '\r' > deploy.sh.new"
 
 6) Requirements
 -------------------------------------
