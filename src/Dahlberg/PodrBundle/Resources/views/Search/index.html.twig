@@ -5,7 +5,57 @@
 
 {% block body %}
     <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a class="current">Search</a>
+        </nav>
+    </div>
+    <div class="row">
         <h2>Search</h2>
         <p>Placeholder</p>
+
+        {{ form(form) }}
+
+        <h3>Episodes</h3>
+        {% if episodes %}
+            <table class="episode-table">
+                <thead>
+                <tr>
+                    <th width="200"></th>
+                    <th>Title</th>
+                    <th width="130">Published Date</th>
+                    <th width="80">Relevance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dto in episodes %}
+                    <tr>
+                        <td class="episode-image">
+                            {% if dto.userepisode.episode.getItunesImage %}
+                                <a class="th round" href="{{ dto.userepisode.episode.getItunesImage }}">
+                                    <img src="{{ dto.userepisode.episode.getItunesImage }}">
+                                </a>
+                            {% elseif dto.userepisode.episode.getPodcast.getItunesImage %}
+                                <a class="th round" href="{{ dto.userepisode.episode.getPodcast.getItunesImage }}">
+                                    <img src="{{ dto.userepisode.episode.getPodcast.getItunesImage }}">
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="episode-info">
+                            <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': dto.userepisode.episode.getId}) }}">{{ dto.userepisode.episode.getTitle[:60] }}</a></h4></div>
+                            <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': dto.userepisode.episode.getPodcast.getId}) }}">{{ dto.userepisode.episode.getPodcast.getTitle[:80] }}</a></h5></div>
+                            <div class="episode-description"><p>{% if dto.userepisode.episode.getItunesSubtitle %}{{ dto.userepisode.episode.getItunesSubtitle[:240] }}
+                                    {% elseif dto.userepisode.episode.getItunesSummary %}{{ dto.userepisode.episode.getItunesSummary[:240] }}
+                                    {% else %}-{% endif %}</p></div>
+                        </td>
+                        <td>{% if dto.userepisode.episode.getPublishedDate %}{{ dto.userepisode.episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        <td>{{ dto.weight }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No episodes found.</p>
+        {% endif %}
     </div>
 {% endblock %}

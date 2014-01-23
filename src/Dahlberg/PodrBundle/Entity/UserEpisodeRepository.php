@@ -2,6 +2,7 @@
 // src/Dahlberg/PodrBundle/Entity/UserEpisodeRepository.php;
 namespace Dahlberg\PodrBundle\Entity;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 
@@ -170,6 +171,34 @@ class UserEpisodeRepository extends EntityRepository {
 
         try {
             return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /* Advanced search */
+
+    public function findByDataOptions($data, $user) {
+        $builder = $this->createQueryBuilder('ue');
+        $builder->select('ue AS userepisode, (CASE WHEN (e.title LIKE :searchterm) THEN 10 ELSE 0 END) +
+                        (CASE WHEN (e.itunesSubtitle LIKE :searchterm) THEN 5 ELSE 0 END) +
+                        (CASE WHEN (e.itunesSummary LIKE :searchterm) THEN 5 ELSE 0 END)
+                        AS weight')
+            ->innerJoin('ue.episode', 'e')
+            ->where('ue.user = :user')
+            ->andWhere($builder->expr()->orX(
+                $builder->expr()->like('e.title', ':searchterm'),
+                $builder->expr()->like('e.itunesSubtitle', ':searchterm'),
+                $builder->expr()->like('e.itunesSummary', ':searchterm')
+            ))
+            ->orderBy('weight', 'DESC')
+            ->setParameter('user', $user)
+            ->setParameter('searchterm', '%'.$data['searchterm'].'%');
+
+        //die($builder->getQuery()->getSQL());
+
+        try {
+            return $builder->getQuery()->getResult();
         } catch (NoResultException $e) {
             return null;
         }
