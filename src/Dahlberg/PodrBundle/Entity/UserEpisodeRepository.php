@@ -55,6 +55,29 @@ class UserEpisodeRepository extends EntityRepository {
      * @param $user
      * @return array|null
      */
+    public function findMostUnarchivedPodcasts($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT NEW DahlbergPodrBundle:PodcastDTO(p.id, p.title, COUNT(ue.archived)), COUNT(ue.archived) as num_unarchived FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 JOIN DahlbergPodrBundle:Podcast p WITH e.podcast = p
+                 WHERE ue.user = :user AND ue.archived = false
+                 GROUP BY p
+                 ORDER BY num_unarchived DESC')
+            ->setMaxResults(10)
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $user
+     * @return array|null
+     */
     public function findMostUnreadPodcasts($user) {
         $query = $this->getEntityManager()
             ->createQuery(

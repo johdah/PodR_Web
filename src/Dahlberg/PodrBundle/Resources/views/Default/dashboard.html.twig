@@ -64,17 +64,17 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <h4>Most unread Podcasts</h4>
-                {% if mostLikedPodcasts %}
+                <h4>Most unarchived Podcasts</h4>
+                {% if mostUnarchivedPodcasts %}
                 <table class="large-12">
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th width="100">Unread</th>
+                        <th width="100">Unarchived</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for podcast in mostUnreadPodcasts %}
+                    {% for podcast in mostUnarchivedPodcasts %}
                         <tr>
                             <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
                             <td>{{ podcast.getCount }}</td>
@@ -87,8 +87,8 @@
                 {% endif %}
             </div>
             <div class="large-6 columns">
-                <h4>Last unread Episodes</h4>
-                {% if latestUnreadEpisodes %}
+                <h4>Oldest unarchived Episodes</h4>
+                {% if oldestUnarchivedEpisodes %}
                     <table class="large-12">
                         <thead>
                         <tr>
@@ -97,7 +97,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for episode in latestUnreadEpisodes %}
+                        {% for episode in oldestUnarchivedEpisodes %}
                             <tr>
                                 <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
                                 <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
@@ -112,9 +112,32 @@
         </div>
 
         <div class="row">
-            <div class="large-6 large-push-6 columns">
-                <h4>Oldest unarchived Episodes</h4>
-                {% if oldestUnarchivedEpisodes %}
+            <div class="large-6 columns">
+                <h4>Most unread Podcasts</h4>
+                {% if mostUnreadPodcasts %}
+                    <table class="large-12">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th width="100">Unread</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for podcast in mostUnreadPodcasts %}
+                            <tr>
+                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                                <td>{{ podcast.getCount }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No podcasts found.</p>
+                {% endif %}
+            </div>
+            <div class="large-6 columns">
+                <h4>Last unread Episodes</h4>
+                {% if latestUnreadEpisodes %}
                     <table class="large-12">
                         <thead>
                         <tr>
@@ -123,7 +146,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for episode in oldestUnarchivedEpisodes %}
+                        {% for episode in latestUnreadEpisodes %}
                             <tr>
                                 <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
                                 <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>

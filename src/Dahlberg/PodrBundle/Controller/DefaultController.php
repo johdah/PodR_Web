@@ -15,6 +15,8 @@ class DefaultController extends Controller {
             ->findMostLikedPodcasts($user);
         $startedEpisodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findStartedEpisodes($user);
+        $mostUnarchivedPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findMostUnarchivedPodcasts($user);
         $mostUnreadPodcasts = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findMostUnreadPodcasts($user);
         $oldestUnarchivedEpisodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')
@@ -23,6 +25,7 @@ class DefaultController extends Controller {
         return $this->render('DahlbergPodrBundle:Default:dashboard.html.twig', array(
             'latestUnreadEpisodes'      => $latestUnreadEpisodes,
             'mostLikedPodcasts'         => $mostLikedPodcasts,
+            'mostUnarchivedPodcasts'    => $mostUnarchivedPodcasts,
             'mostUnreadPodcasts'        => $mostUnreadPodcasts,
             'oldestUnarchivedEpisodes'  => $oldestUnarchivedEpisodes,
             'startedEpisodes'           => $startedEpisodes,
