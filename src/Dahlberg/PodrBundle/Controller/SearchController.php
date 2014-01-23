@@ -18,13 +18,11 @@ class SearchController extends Controller {
         if($form->isValid()) {
             $data = $this->prepareDataOptions($form);
 
-            if($form->get('scope')->getData() != null) {
-                if($form->get('scope')->getData() == "episode") {
-                    $episodes = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserEpisode')->findByDataOptions($data, $user);
-                }
-                if($form->get('scope')->getData() == "podcast") {
-                    //$podcasts = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserPodcast')->findByDataOptions($data, $user);
-                }
+            if($form->get('scope')->getData() == null || $form->get('scope')->getData() == "episode") {
+                $episodes = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserEpisode')->findByDataOptions($data, $user);
+            }
+            if($form->get('scope')->getData() == null || $form->get('scope')->getData() == "podcast") {
+                //$podcasts = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserPodcast')->findByDataOptions($data, $user);
             }
         }
 

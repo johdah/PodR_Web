@@ -11,13 +11,14 @@ class SearchType extends AbstractType
     {
         $builder->add('searchterm', 'text');
         $builder->add('scope', 'choice', array(
-            'choices'   => array(
-                'episode' => 'Episodes',
-                'podcast' => 'Podcasts'),
-            'required'  => false,
-            'expanded' => true,
+            'choices'       => array(
+                'episode'       => 'Episodes',
+                'podcast'       => 'Podcasts'),
+            'required'      => false,
+            'expanded'      => true,
+            'empty_value'   => 'Both'
         ));
-        $builder->add('save', 'submit');
+        $builder->add('search', 'submit');
     }
 
     public function getName()

@@ -30,18 +30,7 @@
             <!-- Right Nav Section -->
             <ul class="right">
                 {% if app.user %}
-                <li class="has-form">
-                    <form method="post" action="{{ path('search_index') }}">
-                        <div class="row collapse">
-                            <div class="large-8 small-9 columns">
-                                <input type="text" id="freetext" name="freetext" placeholder="Find Stuff">
-                            </div>
-                            <div class="large-4 small-3 columns">
-                                <input type="submit" class="alert button expand" value="Search" />
-                            </div>
-                        </div>
-                    </form>
-                </li>
+                <li class="divider"></li>
                 <li><a id="player-toggle" class="radius button">Player</a></li>
                 <li class="divider"></li>
                 <li class="has-dropdown">
@@ -63,6 +52,7 @@
                 <li><a href="{{ path('dashboard') }}">Dashboard</a></li>
                 <li><a href="{{ path('podcast_index') }}">Podcast</a></li>
                 <li><a href="{{ path('episode_index') }}">Episodes</a></li>
+                <li><a href="{{ path('search_index') }}">Search</a></li>
                 {% endif %}
             </ul>
         </section>
