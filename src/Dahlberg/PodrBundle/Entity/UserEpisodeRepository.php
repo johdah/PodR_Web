@@ -195,8 +195,6 @@ class UserEpisodeRepository extends EntityRepository {
             ->setParameter('user', $user)
             ->setParameter('searchterm', '%'.$data['searchterm'].'%');
 
-        //die($builder->getQuery()->getSQL());
-
         try {
             return $builder->getQuery()->getResult();
         } catch (NoResultException $e) {

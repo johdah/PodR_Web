@@ -16,6 +16,7 @@
 
         {{ form(form) }}
 
+        {% if scope == "both" or scope == "episode" %}
         <h3>Episodes</h3>
         {% if episodes %}
             <table class="episode-table">
@@ -56,6 +57,47 @@
             </table>
         {% else %}
             <p>No episodes found.</p>
+        {% endif %}
+        {% endif %}
+
+
+        {% if scope == "both" or scope == "podcast" %}
+        <h3>Podcasts</h3>
+        {% if podcasts %}
+            <table class="episode-table">
+                <thead>
+                <tr>
+                    <th width="200"></th>
+                    <th>Title</th>
+                    <th width="130">Published Date</th>
+                    <th width="80">Relevance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dto in podcasts %}
+                    <tr>
+                        <td class="episode-image">
+                            {% if dto.userpodcast.podcast.getItunesImage %}
+                                <a class="th round" href="{{ dto.userpodcast.podcast.getItunesImage }}">
+                                    <img src="{{ dto.userpodcast.podcast.getItunesImage }}">
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="podcast-info">
+                            <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': dto.userpodcast.podcast.getId}) }}">{{ dto.userpodcast.podcast.getTitle[:60] }}</a></h4></div>
+                            <div class="podcast-description"><p>{% if dto.userpodcast.podcast.getItunesSubtitle %}{{ dto.userpodcast.podcast.getItunesSubtitle[:240] }}
+                                    {% elseif dto.userpodcast.podcast.getItunesSummary %}{{ dto.userpodcast.podcast.getItunesSummary[:240] }}
+                                    {% else %}-{% endif %}</p></div>
+                        </td>
+                        <td>{% if dto.userpodcast.podcast.getDateUpdated %}{{ dto.userpodcast.podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                        <td>{{ dto.weight }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No episodes found.</p>
+        {% endif %}
         {% endif %}
     </div>
 {% endblock %}

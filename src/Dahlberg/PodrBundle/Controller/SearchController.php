@@ -14,21 +14,27 @@ class SearchController extends Controller {
         $form->handleRequest($request);
 
         $episodes = null;
+        $podcasts = null;
+        $scope = "none";
 
         if($form->isValid()) {
             $data = $this->prepareDataOptions($form);
+
+            $scope = ($form->get('scope')->getData() == null) ? "both" : $form->get('scope')->getData();
 
             if($form->get('scope')->getData() == null || $form->get('scope')->getData() == "episode") {
                 $episodes = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserEpisode')->findByDataOptions($data, $user);
             }
             if($form->get('scope')->getData() == null || $form->get('scope')->getData() == "podcast") {
-                //$podcasts = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserPodcast')->findByDataOptions($data, $user);
+                $podcasts = $repository = $this->getDoctrine()->getRepository('DahlbergPodrBundle:UserPodcast')->findByDataOptions($data, $user);
             }
         }
 
         return $this->render('DahlbergPodrBundle:Search:index.html.twig', array(
-            'episodes' => $episodes,
-            'form' => $form->createView()
+            'episodes'  => $episodes,
+            'podcasts'  => $podcasts,
+            'form'      => $form->createView(),
+            'scope'     => $scope
         ));
     }
 
