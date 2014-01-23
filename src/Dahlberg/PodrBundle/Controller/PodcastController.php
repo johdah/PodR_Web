@@ -4,6 +4,7 @@ namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\Episode;
 use Dahlberg\PodrBundle\Entity\Podcast;
+use Dahlberg\PodrBundle\Entity\UserEpisode;
 use Dahlberg\PodrBundle\Entity\UserPodcast;
 use Dahlberg\PodrBundle\Lib\OpmlParser;
 use Dahlberg\PodrBundle\Lib\PodcastParser;
@@ -226,6 +227,23 @@ class PodcastController extends Controller {
 
     /* NOT ACTIONS */
 
+    public function prepareUserEpisode($episode, $user) {
+        if(!$episode)
+            throw $this->createNotFoundException('The episode does not exist');
+
+        $userEpisode = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findOneBy(array('episode' => $episode, 'user' => $user));
+
+        if(!$userEpisode) {
+            $userEpisode = new UserEpisode();
+            $userEpisode->setEpisode($episode);
+            $userEpisode->setUser($user);
+        }
+
+        return $userEpisode;
+    }
+
     public function prepareUserPodcast($podcastId) {
         $user = $this->get('security.context')->getToken()->getUser();
         $podcast = $this->getDoctrine()
@@ -251,8 +269,6 @@ class PodcastController extends Controller {
     public function updater(Podcast $podcast) {
         $em = $this->getDoctrine()->getManager();
 
-        //$userPodcasts = UserPodcast::where('podcast_id', '=', $podcast->id);
-
         $parser = new PodcastParser($podcast->getFeedurl());
         $podcast->setCopyright($parser->getPodcastCopyright());
         $podcast->setDescription($parser->getPodcastDescription());
@@ -272,6 +288,10 @@ class PodcastController extends Controller {
 
         $em->persist($podcast);
         $em->flush();
+
+        $userPodcasts = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:UserPodcast')
+            ->findAll(array('podcast' => $podcast));
 
         // TODO: Need to be more effective
         while($parser->exists()) {
@@ -302,13 +322,12 @@ class PodcastController extends Controller {
                 $em->flush();
 
                 // Add a UserEpisode for every follower
-                /*foreach($userPodcasts as $userPodcast) {
-                    $userEpisode = new UserEpisode();
-                    $userEpisode->episode_id = $episode->id;
-                    $userEpisode->podcast_id = $podcast->id;
-                    $userEpisode->user_id = $userPodcast->user_id;
-                    $userEpisode->save();
-                }*/
+                foreach($userPodcasts as $userPodcast) {
+                    $userEpisode = $this->prepareUserEpisode($episode, $userPodcast->getUser());
+
+                    $em->persist($userEpisode);
+                    $em->flush();
+                }
             }
 
             $parser->next();

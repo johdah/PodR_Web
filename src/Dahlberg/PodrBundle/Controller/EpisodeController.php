@@ -13,7 +13,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setArchived(true);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);
@@ -23,6 +22,7 @@ class EpisodeController extends Controller {
     }
 
     public function detailsAction($id) {
+        $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
         $episode = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:Episode')
@@ -30,6 +30,12 @@ class EpisodeController extends Controller {
         $userEpisode = $this->getDoctrine()
             ->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findOneBy(array('episode' => $episode, 'user' => $user));
+
+        if($userEpisode != null && $userEpisode->getUnread() == true) {
+            $userEpisode->setUnread(false);
+            $em->persist($userEpisode);
+            $em->flush();
+        }
 
         if(!$episode)
             throw $this->createNotFoundException('The episode does not exist');
@@ -45,7 +51,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setRating(-1);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);
@@ -90,7 +95,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setArchived(false);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);
@@ -104,7 +108,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setStashed(true);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);
@@ -118,7 +121,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setStashed(false);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);
@@ -132,7 +134,6 @@ class EpisodeController extends Controller {
 
         $userEpisode = $this->prepareUserEpisode($id);
         $userEpisode->setCurrentTime($time);
-        $userEpisode->setUnread(false);
         $userEpisode->setDateUpdated(new \DateTime('NOW'));
 
         $em->persist($userEpisode);

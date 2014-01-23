@@ -90,7 +90,11 @@
                 {% for episode in podcast.getEpisodes %}
                     <tr>
                         <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
-                        <td>{% if episode.getUserEpisode(user) is not null and episode.getUserEpisode(user).getArchived == false %}Unarchived{% endif %}</td>
+                        <td>{% if episode.getUserEpisode(user) is not null and episode.getUserEpisode(user).getUnread == true %}
+                            Unread
+                        {% elseif episode.getUserEpisode(user) is not null and episode.getUserEpisode(user).getArchived == false %}
+                            Unarchived
+                        {% else %}-{% endif %}</td>
                         <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                     </tr>
                 {% endfor %}
