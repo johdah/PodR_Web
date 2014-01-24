@@ -44,13 +44,13 @@
                         <thead>
                         <tr>
                             <th>Title</th>
-                            <th width="100">Current Time</th>
+                            <th width="100">Played time</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for userepisode in startedEpisodes %}
                             <tr>
-                                <td><a href="{{ path('episode_details', {'id': userepisode.episode.getId}) }}">{{ userepisode.episode.getTitle }}</a></td>
+                                <td><a href="{{ path('episode_details', {'id': userepisode.episode.getId}) }}">{{ userepisode.episode.getTitle[:55] }}</a></td>
                                 <td>{{ userepisode.getCurrentPosition|secondsToTime }}</td>
                             </tr>
                         {% endfor %}
@@ -136,7 +136,7 @@
                 {% endif %}
             </div>
             <div class="large-6 columns">
-                <h4>Last unread Episodes</h4>
+                <h4>Newest unread Episodes</h4>
                 {% if latestUnreadEpisodes %}
                     <table class="large-12">
                         <thead>

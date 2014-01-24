@@ -57,3 +57,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* Utils
+-------------------------------------*/
+.one-liner {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
