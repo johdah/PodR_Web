@@ -27,7 +27,7 @@
                     <tbody>
                     {% for podcast in mostLikedPodcasts %}
                         <tr>
-                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle[:55] }}</a></td>
                             <td>{{ podcast.getCount }}</td>
                         </tr>
                     {% endfor %}
@@ -76,7 +76,7 @@
                     <tbody>
                     {% for podcast in mostUnarchivedPodcasts %}
                         <tr>
-                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                            <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle[:55] }}</a></td>
                             <td>{{ podcast.getCount }}</td>
                         </tr>
                     {% endfor %}
@@ -99,7 +99,7 @@
                         <tbody>
                         {% for episode in oldestUnarchivedEpisodes %}
                             <tr>
-                                <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                                <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></td>
                                 <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                             </tr>
                         {% endfor %}
@@ -125,7 +125,7 @@
                         <tbody>
                         {% for podcast in mostUnreadPodcasts %}
                             <tr>
-                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle[:55] }}</a></td>
                                 <td>{{ podcast.getCount }}</td>
                             </tr>
                         {% endfor %}
@@ -148,7 +148,7 @@
                         <tbody>
                         {% for episode in latestUnreadEpisodes %}
                             <tr>
-                                <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle }}</a></td>
+                                <td><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></td>
                                 <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                             </tr>
                         {% endfor %}
