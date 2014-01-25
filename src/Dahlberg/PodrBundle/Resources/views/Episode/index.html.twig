@@ -14,11 +14,52 @@
         <h2>Episodes</h2>
 
         <dl class="tabs" data-tab>
+            <dd><a href="#liked">Liked</a></dd>
             <dd class="active"><a href="#stashed">Stashed</a></dd>
             <dd><a href="#unarchived">Unarchived</a></dd>
             <dd><a href="#unread">Unread</a></dd>
         </dl>
         <div class="tabs-content">
+            <div class="content active large-12" id="liked">
+                {% if liked %}
+                    <table class="episode-table">
+                        <thead>
+                        <tr>
+                            <th width="200"></th>
+                            <th>Title</th>
+                            <th width="130">Published Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for episode in liked %}
+                            <tr>
+                                <td class="episode-image">
+                                    {% if episode.getItunesImage %}
+                                        <a class="th round" href="{{ episode.getItunesImage }}">
+                                            <img src="{{ episode.getItunesImage }}">
+                                        </a>
+                                    {% elseif episode.getPodcast.getItunesImage %}
+                                        <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                            <img src="{{ episode.getPodcast.getItunesImage }}">
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td class="episode-info">
+                                    <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
+                                    <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
+                                    <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                            {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                            {% else %}-{% endif %}</p></div>
+                                </td>
+                                <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No episodes found.</p>
+                {% endif %}
+            </div>
             <div class="content active large-12" id="stashed">
                 {% if stashed %}
                 <table class="episode-table">
@@ -44,7 +85,7 @@
                             {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
                                 <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
@@ -84,7 +125,7 @@
                                 {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
                                 <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
@@ -124,7 +165,7 @@
                                 {% endif %}
                             </td>
                             <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:60] }}</a></h4></div>
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
                                 <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
                                 <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
                                         {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}

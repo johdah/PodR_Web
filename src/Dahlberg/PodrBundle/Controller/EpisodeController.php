@@ -62,6 +62,8 @@ class EpisodeController extends Controller {
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
+        $liked = $em->getRepository('DahlbergPodrBundle:UserEpisode')
+            ->findLikedEpisodes($user);
         $stashed = $em->getRepository('DahlbergPodrBundle:UserEpisode')
             ->findStashedEpisodes($user);
         $unarchived = $em->getRepository('DahlbergPodrBundle:UserEpisode')
@@ -70,9 +72,10 @@ class EpisodeController extends Controller {
             ->findUnreadEpisodes($user);
 
         return $this->render('DahlbergPodrBundle:Episode:index.html.twig', array(
-            'stashed' => $stashed,
-            'unarchived' => $unarchived,
-            'unread' => $unread,
+            'liked'         => $liked,
+            'stashed'       => $stashed,
+            'unarchived'    => $unarchived,
+            'unread'        => $unread,
         ));
     }
 

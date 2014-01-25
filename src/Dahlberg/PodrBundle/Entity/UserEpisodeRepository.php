@@ -32,6 +32,26 @@ class UserEpisodeRepository extends EntityRepository {
      * @param $user
      * @return array|null
      */
+    public function findLikedEpisodes($user) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 WHERE ue.user = :user and ue.rating = 1
+                 ORDER BY e.publishedDate DESC')
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $user
+     * @return array|null
+     */
     public function findMostLikedPodcasts($user) {
         $query = $this->getEntityManager()
             ->createQuery(
