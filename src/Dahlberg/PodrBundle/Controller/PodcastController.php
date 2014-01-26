@@ -269,6 +269,9 @@ class PodcastController extends Controller {
     public function updater(Podcast $podcast) {
         $em = $this->getDoctrine()->getManager();
 
+        $markAsUnreadSeparator = new \DateTime('NOW');
+        $markAsUnreadSeparator->modify('-10 day');
+
         $parser = new PodcastParser($podcast->getFeedurl());
         $podcast->setCopyright($parser->getPodcastCopyright());
         $podcast->setDescription($parser->getPodcastDescription());
@@ -320,6 +323,9 @@ class PodcastController extends Controller {
                 $episode->setDateUpdated(new \DateTime('NOW'));
                 $em->persist($episode);
                 $em->flush();
+
+                if($markAsUnreadSeparator > $episode->getPublishedDate())
+                    continue; // Don't mark as read if older than 10 days
 
                 // Add a UserEpisode for every follower
                 foreach($userPodcasts as $userPodcast) {
