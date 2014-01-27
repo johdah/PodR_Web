@@ -7,7 +7,8 @@
     <div class="row">
         <nav class="breadcrumbs">
             <a href="{{ path('root') }}">Home</a>
-            <a class="current">Playlists</a>
+            <a href="{{ path('playlist_index') }}">Home</a>
+            <a class="current">{{ playlist.getTitle }}</a>
         </nav>
     </div>
     <div class="row playlist-details">
