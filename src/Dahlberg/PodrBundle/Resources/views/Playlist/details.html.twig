@@ -1,0 +1,25 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Playlist/index.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | Playlists{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a class="current">Playlists</a>
+        </nav>
+    </div>
+    <div class="row playlist-details">
+        <div class="large-3 columns">
+        </div>
+        <div class="large-9 columns">
+            {% if playlist %}
+            <h1><small id="playlist_id">#{{ playlist.getId }} </small> {{ playlist.getTitle }}</h1>
+            {% else %}
+                <h1>Playlist</h1>
+                <p>The selected playlist doesn't exist.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

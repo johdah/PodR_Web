@@ -50,6 +50,12 @@
     }
 }
 
+/* Playlist
+-------------------------------------*/
+.playlist-index .playlist-list {
+    width: 100%;
+}
+
 /* Podcast
 -------------------------------------*/
 .podcast-table .podcast-title,

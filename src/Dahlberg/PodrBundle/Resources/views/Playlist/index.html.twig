@@ -10,9 +10,15 @@
             <a class="current">Playlists</a>
         </nav>
     </div>
-    <div class="row">
-        <h2>Playlists</h2>
-
-
+    <div class="row playlist-index">
+        {% if playlists %}
+            <dl class="tabs vertical playlist-list one-liner">
+                {% for playlist in playlists %}
+                    <dd><a href="{{ path('playlist_details', {'id': playlist.getId}) }}">{{ playlist.getTitle }}</a></dd>
+                {% endfor %}
+            </dl>
+        {% else %}
+            <p>No playlists found.</p>
+        {% endif %}
     </div>
 {% endblock %}

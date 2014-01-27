@@ -72,6 +72,10 @@ playlist_index:
     path:     /playlist
     defaults: { _controller: DahlbergPodrBundle:Playlist:index }
 
+playlist_details:
+    path:     /playlist/{id}
+    defaults: { _controller: DahlbergPodrBundle:Playlist:details }
+
 # Podcast
 podcast_index:
     path:     /podcast
