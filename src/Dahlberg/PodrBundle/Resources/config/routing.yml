@@ -67,6 +67,11 @@ episode_updatetime:
     path:     /episode/{id}/updatetime/{time}
     defaults: { _controller: DahlbergPodrBundle:Episode:updateTime, time: -1 }
 
+# Playlist
+playlist_index:
+    path:     /playlist
+    defaults: { _controller: DahlbergPodrBundle:Playlist:index }
+
 # Podcast
 podcast_index:
     path:     /podcast

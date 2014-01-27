@@ -36,4 +36,7 @@ security:
         - { path: ^/account/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/account, roles: ROLE_USER }
         - { path: ^/dashboard, roles: ROLE_USER }
+        - { path: ^/episode, roles: ROLE_USER }
+        - { path: ^/playlist, roles: ROLE_USER }
+        - { path: ^/podcast, roles: ROLE_USER }
         - { path: ^, roles: IS_AUTHENTICATED_ANONYMOUSLY }
