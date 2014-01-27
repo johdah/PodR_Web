@@ -2,7 +2,11 @@
 // src/Dahlberg/PodrBundle/Controller/PlaylistController.php;
 namespace Dahlberg\PodrBundle\Controller;
 
+use Dahlberg\PodrBundle\Entity\Playlist;
+use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\Request;
 
 class PlaylistController extends Controller {
     public function detailsAction($id) {
@@ -16,15 +20,40 @@ class PlaylistController extends Controller {
         ));
     }
 
-    public function indexAction() {
-        $user = $this->get('security.context')->getToken()->getUser();
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $form = $this->createFormBuilder()
+            ->add('title', 'text', array(
+                'required' => true
+            ))
+            ->add('save', 'submit')
+            ->getForm();
+        $form->handleRequest($request);
+        $formSuccess = null;
+
+        if ($form->isValid()) {
+            $playlist = new Playlist();
+            $playlist->setOwner($user);
+            $playlist->setTitle($form->get('title')->getData());
+
+            $em->persist($playlist);
+            try {
+                $em->flush();
+                $formSuccess = "Podcast added!";
+            } catch(DBALException $e) {
+                $form->addError(new FormError("Can't add that podcast. Maybe it already exists"));
+            }
+        }
 
         $playlists = $em->getRepository('DahlbergPodrBundle:Playlist')->findBy(
                 array('owner' => $user),
                 array('title' => 'ASC'));
 
         return $this->render('DahlbergPodrBundle:Playlist:index.html.twig', array(
+            'form'      => $form->createView(),
+            'formSuccess' => $formSuccess,
             'playlists' => $playlists
         ));
     }

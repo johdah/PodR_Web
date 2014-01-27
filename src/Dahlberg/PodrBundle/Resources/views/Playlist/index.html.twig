@@ -20,5 +20,19 @@
         {% else %}
             <p>No playlists found.</p>
         {% endif %}
+
+        <h3>Add playlist</h3>
+        {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_errors(form) }}
+            {% if formSuccess %}
+                <div data-alert class="alert-box success radius">
+                    {{ formSuccess }}
+                </div>
+            {% endif %}
+            <div>
+                {{ form_widget(form.save) }}
+            </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
