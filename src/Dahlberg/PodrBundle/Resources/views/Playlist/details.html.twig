@@ -14,12 +14,48 @@
         <div class="large-3 columns">
         </div>
         <div class="large-9 columns">
-            {% if playlist %}
+        {% if playlist %}
             <h1><small id="playlist_id">#{{ playlist.getId }} </small> {{ playlist.getTitle }}</h1>
+
+            <h2>Podcasts</h2>
+            {% if playlist.getPlaylistPodcasts %}
+                <table class="podcast-table">
+                    <thead>
+                    <tr>
+                        <th width="200"></th>
+                        <th>Title</th>
+                        <th width="150">Last Updated</th>
+                        <th width="100"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for playlistpodcast in playlist.getPlaylistPodcasts %}
+                        <tr>
+                            <td>
+                                {% if playlistpodcast.podcast.getItunesImage %}
+                                    <a class="th round" href="{{ playlistpodcast.podcast.getItunesImage }}">
+                                        <img src="{{ playlistpodcast.podcast.getItunesImage }}">
+                                    </a>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a></h4></div>
+                                <div class="podcast-description"><p>{{ playlistpodcast.podcast.getDescription[:240] }}</p></div>
+                            </td>
+                            <td>{% if playlistpodcast.podcast.getDateUpdated %}{{ playlistpodcast.podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                            <td><a href="{{ path('podcast_update', {'id': playlistpodcast.podcast.getId}) }}" class="button tiny round">Update</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             {% else %}
-                <h1>Playlist</h1>
-                <p>The selected playlist doesn't exist.</p>
+                <p>No podcasts found.</p>
             {% endif %}
+
+        {% else %}
+            <h1>Playlist</h1>
+            <p>The selected playlist doesn't exist.</p>
+        {% endif %}
         </div>
     </div>
 {% endblock %}
