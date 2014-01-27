@@ -60,6 +60,11 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * @ORM\OneToMany(targetEntity="UserPodcast", mappedBy="user")
      */
+    private $userOwnedPlaylists;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserPodcast", mappedBy="user")
+     */
     private $userPodcasts;
 
     public function __construct()
@@ -342,12 +347,45 @@ class User implements AdvancedUserInterface, \Serializable {
     }
 
     /**
-     * Add userPodcasts
+     * Add userOwnedPlaylists
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @param Playlist $userOwnedPlaylists
      * @return User
      */
-    public function addUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    public function addUserOwnedPlaylist(Playlist $userOwnedPlaylists)
+    {
+        $this->userOwnedPlaylists[] = $userOwnedPlaylists;
+
+        return $this;
+    }
+
+    /**
+     * Remove userOwnedPlaylists
+     *
+     * @param Playlist $userOwnedPlaylists
+     */
+    public function removeUserOwnedPlaylist(Playlist $userOwnedPlaylists)
+    {
+        $this->userOwnedPlaylists->removeElement($userOwnedPlaylists);
+    }
+
+    /**
+     * Get userOwnedPlaylists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUserOwnedPlaylist()
+    {
+        return $this->userOwnedPlaylists;
+    }
+
+    /**
+     * Add userPodcasts
+     *
+     * @param UserPodcast $userPodcasts
+     * @return User
+     */
+    public function addUserPodcast(UserPodcast $userPodcasts)
     {
         $this->userPodcasts[] = $userPodcasts;
 
@@ -357,9 +395,9 @@ class User implements AdvancedUserInterface, \Serializable {
     /**
      * Remove userPodcasts
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @param UserPodcast $userPodcasts
      */
-    public function removeUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    public function removeUserPodcast(UserPodcast $userPodcasts)
     {
         $this->userPodcasts->removeElement($userPodcasts);
     }

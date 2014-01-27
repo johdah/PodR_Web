@@ -109,6 +109,11 @@ class Podcast implements \JsonSerializable {
     private $episodes;
 
     /**
+     * @ORM\OneToMany(targetEntity="PlaylistPodcast", mappedBy="playlist")
+     */
+    private $playlistPodcasts;
+
+    /**
      * @ORM\OneToMany(targetEntity="UserPodcast", mappedBy="podcast")
      */
     private $userPodcasts;
@@ -545,10 +550,10 @@ class Podcast implements \JsonSerializable {
     /**
      * Add episodes
      *
-     * @param \Dahlberg\PodrBundle\Entity\Episode $episodes
+     * @param Episode $episodes
      * @return Podcast
      */
-    public function addEpisode(\Dahlberg\PodrBundle\Entity\Episode $episodes)
+    public function addEpisode(Episode $episodes)
     {
         $this->episodes[] = $episodes;
 
@@ -558,9 +563,9 @@ class Podcast implements \JsonSerializable {
     /**
      * Remove episodes
      *
-     * @param \Dahlberg\PodrBundle\Entity\Episode $episodes
+     * @param Episode $episodes
      */
-    public function removeEpisode(\Dahlberg\PodrBundle\Entity\Episode $episodes)
+    public function removeEpisode(Episode $episodes)
     {
         $this->episodes->removeElement($episodes);
     }
@@ -576,12 +581,45 @@ class Podcast implements \JsonSerializable {
     }
 
     /**
-     * Add userPodcasts
+     * Add playlistPodcasts
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @param PlaylistPodcast $playlistPodcast
      * @return Podcast
      */
-    public function addUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    public function addPlaylistPodcast(PlaylistPodcast $playlistPodcast)
+    {
+        $this->playlistPodcasts[] = $playlistPodcast;
+
+        return $this;
+    }
+
+    /**
+     * Remove playlistPodcasts
+     *
+     * @param PlaylistPodcast $playlistPodcast
+     */
+    public function removePlaylistPodcast(PlaylistPodcast $playlistPodcast)
+    {
+        $this->playlistPodcasts->removeElement($playlistPodcast);
+    }
+
+    /**
+     * Get PlaylistPodcast
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlaylistPodcasts()
+    {
+        return $this->playlistPodcasts;
+    }
+
+    /**
+     * Add userPodcasts
+     *
+     * @param UserPodcast $userPodcasts
+     * @return Podcast
+     */
+    public function addUserPodcast(UserPodcast $userPodcasts)
     {
         $this->userPodcasts[] = $userPodcasts;
 
@@ -591,9 +629,9 @@ class Podcast implements \JsonSerializable {
     /**
      * Remove userPodcasts
      *
-     * @param \Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts
+     * @param UserPodcast $userPodcasts
      */
-    public function removeUserPodcast(\Dahlberg\PodrBundle\Entity\UserPodcast $userPodcasts)
+    public function removeUserPodcast(UserPodcast $userPodcasts)
     {
         $this->userPodcasts->removeElement($userPodcasts);
     }
