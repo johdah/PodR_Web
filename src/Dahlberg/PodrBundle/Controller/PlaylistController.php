@@ -59,4 +59,23 @@ class PlaylistController extends Controller {
             'playlists' => $playlists
         ));
     }
+
+    public function removePodcastAction($playlistId, $podcastId) {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $playlist = $em->getRepository('DahlbergPodrBundle:Playlist')->findOneBy(array('id' => $playlistId, 'owner' => $user));
+        $podcast = $em->getRepository('DahlbergPodrBundle:Podcast')->findOneBy(array('id' => $podcastId));
+
+        $playlistPodcast = $this->getDoctrine()->getRepository('DahlbergPodrBundle:PlaylistPodcast')
+            ->findOneBy(array('playlist' => $playlist, 'podcast' => $podcast));
+
+        if(!$playlistPodcast)
+            throw $this->createNotFoundException('The podcast does not exist in that playlist');
+
+        $em->remove($playlistPodcast);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('playlist_details', array('id' => $playlistId)));
+    }
 }

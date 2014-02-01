@@ -56,6 +56,11 @@
     width: 100%;
 }
 
+.playlist-details .podcast-list {
+    list-style: none;
+    margin-left: 0;
+}
+
 /* Podcast
 -------------------------------------*/
 .podcast-table .podcast-title,

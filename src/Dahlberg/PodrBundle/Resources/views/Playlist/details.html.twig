@@ -15,9 +15,10 @@
         <div class="large-3 columns">
             <h2>Podcasts</h2>
             {% if playlist.getPlaylistPodcasts %}
-            <ul>
+            <ul class="podcast-list">
                 {% for playlistpodcast in playlist.getPlaylistPodcasts %}
-                <li><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a></li>
+                <li><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a>
+                    <a href="{{ path('playlist_remove_podcast', {'playlistId': playlistpodcast.playlist.getId, 'podcastId': playlistpodcast.podcast.getId}) }}"><span class="label round secondary right">X</span></a></li>
                 {% endfor %}
             </ul>
             {% else %}

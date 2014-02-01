@@ -76,6 +76,10 @@ playlist_details:
     path:     /playlist/{id}
     defaults: { _controller: DahlbergPodrBundle:Playlist:details }
 
+playlist_remove_podcast:
+    path:     /playlist/{playlistId}/remove/{podcastId}
+    defaults: { _controller: DahlbergPodrBundle:Playlist:removePodcast }
+
 # Podcast
 podcast_index:
     path:     /podcast
