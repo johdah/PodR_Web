@@ -13,38 +13,53 @@
     </div>
     <div class="row playlist-details">
         <div class="large-3 columns">
+            <h2>Podcasts</h2>
+            {% if playlist.getPlaylistPodcasts %}
+            <ul>
+                {% for playlistpodcast in playlist.getPlaylistPodcasts %}
+                <li><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>No podcasts found.</p>
+            {% endif %}
         </div>
         <div class="large-9 columns">
         {% if playlist %}
             <h1><small id="playlist_id">#{{ playlist.getId }} </small> {{ playlist.getTitle }}</h1>
 
-            <h2>Podcasts</h2>
+            <h2>Episodes</h2>
             {% if playlist.getPlaylistPodcasts %}
                 <table class="podcast-table">
                     <thead>
                     <tr>
                         <th width="200"></th>
                         <th>Title</th>
-                        <th width="150">Last Updated</th>
-                        <th width="100"></th>
+                        <th width="130">Published Date</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for playlistpodcast in playlist.getPlaylistPodcasts %}
+                    {% for episode in episodes %}
                         <tr>
-                            <td>
-                                {% if playlistpodcast.podcast.getItunesImage %}
-                                    <a class="th round" href="{{ playlistpodcast.podcast.getItunesImage }}">
-                                        <img src="{{ playlistpodcast.podcast.getItunesImage }}">
+                            <td class="episode-image">
+                                {% if episode.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getItunesImage }}">
+                                        <img src="{{ episode.getItunesImage }}">
+                                    </a>
+                                {% elseif episode.getPodcast.getItunesImage %}
+                                    <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                        <img src="{{ episode.getPodcast.getItunesImage }}">
                                     </a>
                                 {% endif %}
                             </td>
-                            <td>
-                                <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a></h4></div>
-                                <div class="podcast-description"><p>{{ playlistpodcast.podcast.getDescription[:240] }}</p></div>
+                            <td class="episode-info">
+                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
+                                <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
+                                <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                        {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                        {% else %}-{% endif %}</p></div>
                             </td>
-                            <td>{% if playlistpodcast.podcast.getDateUpdated %}{{ playlistpodcast.podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
-                            <td><a href="{{ path('podcast_update', {'id': playlistpodcast.podcast.getId}) }}" class="button tiny round">Update</a></td>
+                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

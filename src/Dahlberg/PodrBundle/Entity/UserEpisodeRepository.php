@@ -201,6 +201,30 @@ class UserEpisodeRepository extends EntityRepository {
 
     /**
      * @param $user
+     * @param $playlist
+     * @return array|null
+     */
+    public function findUnarchivedEpisodesByPlaylist($user, $playlist) {
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT e FROM DahlbergPodrBundle:UserEpisode ue
+                 JOIN DahlbergPodrBundle:Episode e WITH ue.episode = e
+                 JOIN DahlbergPodrBundle:Podcast p WITH e.podcast = p
+                 JOIN DahlbergPodrBundle:PlaylistPodcast pp WITH pp.podcast = p AND pp.playlist = :playlist
+                 WHERE ue.user = :user and ue.archived = false
+                 ORDER BY e.publishedDate DESC')
+            ->setParameter('playlist', $playlist)
+            ->setParameter('user', $user);
+
+        try {
+            return $query->getResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $user
      * @return array|null
      */
     public function findUnreadEpisodes($user) {

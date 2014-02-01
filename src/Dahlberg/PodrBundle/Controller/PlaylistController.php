@@ -14,8 +14,10 @@ class PlaylistController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $playlist = $em->getRepository('DahlbergPodrBundle:Playlist')->findOneBy(array('id' => $id, 'owner' => $user));
+        $episodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')->findUnarchivedEpisodesByPlaylist($user, $playlist);
 
         return $this->render('DahlbergPodrBundle:Playlist:details.html.twig', array(
+            'episodes'  => $episodes,
             'playlist'  => $playlist,
         ));
     }
