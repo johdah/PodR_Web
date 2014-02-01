@@ -16,6 +16,7 @@ class PlaylistController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $playlist = $em->getRepository('DahlbergPodrBundle:Playlist')->findOneBy(array('id' => $id, 'owner' => $user));
+        $podcasts = $em->getRepository('DahlbergPodrBundle:Podcast')->findAllPodcastsByPlaylist($playlist);
         $episodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')->findUnarchivedEpisodesByPlaylist($user, $playlist);
 
         $allPodcasts = $em->getRepository('DahlbergPodrBundle:Podcast')->findAllPodcastsByUser($user);
@@ -56,6 +57,7 @@ class PlaylistController extends Controller {
             'formSuccess'   => $formSuccess,
             'episodes'      => $episodes,
             'playlist'      => $playlist,
+            'podcasts'      => $podcasts,
         ));
     }
 

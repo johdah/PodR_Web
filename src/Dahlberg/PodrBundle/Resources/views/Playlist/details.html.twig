@@ -167,9 +167,9 @@
             <h2>Podcasts</h2>
             {% if playlist.getPlaylistPodcasts %}
             <ul class="podcast-list">
-                {% for playlistpodcast in playlist.getPlaylistPodcasts %}
-                <li><a href="{{ path('podcast_details', {'id': playlistpodcast.podcast.getId}) }}">{{ playlistpodcast.podcast.getTitle }}</a>
-                    <a href="{{ path('playlist_remove_podcast', {'playlistId': playlistpodcast.playlist.getId, 'podcastId': playlistpodcast.podcast.getId}) }}"><span class="label round secondary right">X</span></a></li>
+                {% for podcast in podcasts %}
+                <li><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle[:25] }}</a>
+                    <a href="{{ path('playlist_remove_podcast', {'playlistId': playlist.getId, 'podcastId': podcast.getId}) }}"><span class="label round secondary right">X</span></a></li>
                 {% endfor %}
             </ul>
             {% else %}
