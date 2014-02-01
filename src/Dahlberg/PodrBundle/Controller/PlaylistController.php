@@ -3,22 +3,59 @@
 namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\Playlist;
+use Dahlberg\PodrBundle\Entity\PlaylistPodcast;
+use Dahlberg\PodrBundle\Lib\DataManipulator;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class PlaylistController extends Controller {
-    public function detailsAction($id) {
+    public function detailsAction(Request $request, $id) {
         $user = $this->get('security.context')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $playlist = $em->getRepository('DahlbergPodrBundle:Playlist')->findOneBy(array('id' => $id, 'owner' => $user));
         $episodes = $em->getRepository('DahlbergPodrBundle:UserEpisode')->findUnarchivedEpisodesByPlaylist($user, $playlist);
 
+        $allPodcasts = $em->getRepository('DahlbergPodrBundle:Podcast')->findAllPodcastsByUser($user);
+        $manipulator = new DataManipulator;
+        $filteredPodcasts = $manipulator->associate($allPodcasts, 'id', 'title');
+
+        $form = $this->createFormBuilder()
+            ->add('podcasts', 'choice', array(
+                'required' => true,
+                'choices' => $filteredPodcasts
+            ))
+            ->add('add', 'submit')
+            ->getForm();
+        $form->handleRequest($request);
+        $formSuccess = null;
+
+        if ($form->isValid()) {
+            $podcast = $em->getRepository('DahlbergPodrBundle:Podcast')->findOneById($form->get('podcasts')->getData());
+
+            $playlistPodcast = $em->getRepository('DahlbergPodrBundle:PlaylistPodcast')->findOneBy(array('playlist' => $playlist, 'podcast' => $podcast));
+            if($playlistPodcast == null) {
+                $playlistPodcast = new PlaylistPodcast();
+                $playlistPodcast->setPlaylist($playlist);
+                $playlistPodcast->setPodcast($podcast);
+            }
+
+            $em->persist($playlistPodcast);
+            try {
+                $em->flush();
+                $formSuccess = "Podcast(s) added to playlist!";
+            } catch(DBALException $e) {
+                $form->addError(new FormError("Can't add that podcast. Maybe it's already added"));
+            }
+        }
+
         return $this->render('DahlbergPodrBundle:Playlist:details.html.twig', array(
-            'episodes'  => $episodes,
-            'playlist'  => $playlist,
+            'form'          => $form->createView(),
+            'formSuccess'   => $formSuccess,
+            'episodes'      => $episodes,
+            'playlist'      => $playlist,
         ));
     }
 

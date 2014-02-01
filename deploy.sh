@@ -13,6 +13,7 @@ function prep()
     echo "Preparing for Deploy..."
     php $PROJECT_LOCAL_PATH/app/console cache:clear --env=prod --no-debug
     php $PROJECT_LOCAL_PATH/app/console assetic:dump --env=prod --no-debug
+    php $PROJECT_LOCAL_PATH/app/console assets:install web --symlink
 }
 
 

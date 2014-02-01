@@ -7,15 +7,20 @@
     <title>{% block title 'PodR' %}</title>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    {% block headstylesheets %}
     {% stylesheets '@DahlbergPodrBundle/Resources/public/css/foundation.min.css'
                    '@DahlbergPodrBundle/Resources/public/css/foundation-icons.css'
                    '@DahlbergPodrBundle/Resources/public/css/application.css'
                    filter='cssrewrite' %}
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+    {% endblock %}
+
+    {% block headjavascripts %}
     {% javascripts '@DahlbergPodrBundle/Resources/public/js/modernizr.js' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% endblock %}
 </head>
 <body>
     <nav class="top-bar" data-topbar>
@@ -87,11 +92,13 @@
         {% block body %}{% endblock %}
     </div>
 
-    {% javascripts  '@DahlbergPodrBundle/Resources/public/js/jquery.js'
+    {% block bodyjavascripts %}
+    {% javascripts  '@DahlbergPodrBundle/Resources/public/js/jquery.min.js'
                     '@DahlbergPodrBundle/Resources/public/js/foundation.min.js'
                     '@DahlbergPodrBundle/Resources/public/js/application.coffee'
                     '@DahlbergPodrBundle/Resources/public/js/player.coffee' %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% endblock %}
 </body>
 </html>
