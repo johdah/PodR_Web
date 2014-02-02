@@ -37,6 +37,7 @@ If you get any warnings or recommendations, fix them.
 - Run "php app/console cache:clear -e=prod" to clear the cache
 - Run "php app/console assetic:dump --env=prod --no-debug" to dump the css/js resources.
 - Or set permissions 755 on "deploy.sh" and run "./deploy.sh"
+- Update DB if necessary with the command "php app/console doctrine:schema:update --force"
 
 5) Troubleshooting
 -------------------------------------

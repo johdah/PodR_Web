@@ -69,6 +69,24 @@ class PlaylistController extends Controller {
             ->add('title', 'text', array(
                 'required' => true
             ))
+            ->add('icon', 'choice', array(
+                'required' => true,
+                'choices' => array(
+                    "heart"     => "Heart",
+                    "like"      => "Like",
+                    "marker"    => "Marker",
+                )
+            ))
+            ->add('style', 'choice', array(
+                'required' => true,
+                'choices' => array(
+                    "style1"    => "Green",
+                    "style2"    => "Blue (Shadow)",
+                    "style3"    => "Red (Glowing)",
+                    "style4"    => "Purple",
+                    "style5"    => "Yellow (Depth)",
+                )
+            ))
             ->add('save', 'submit')
             ->getForm();
         $form->handleRequest($request);
@@ -76,15 +94,17 @@ class PlaylistController extends Controller {
 
         if ($form->isValid()) {
             $playlist = new Playlist();
+            $playlist->setIcon($form->get('icon')->getData());
             $playlist->setOwner($user);
+            $playlist->setStyle($form->get('style')->getData());
             $playlist->setTitle($form->get('title')->getData());
 
             $em->persist($playlist);
             try {
                 $em->flush();
-                $formSuccess = "Podcast added!";
+                $formSuccess = "Playlist added!";
             } catch(DBALException $e) {
-                $form->addError(new FormError("Can't add that podcast. Maybe it already exists"));
+                $form->addError(new FormError("Can't add that playlist."));
             }
         }
 

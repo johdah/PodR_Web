@@ -17,9 +17,19 @@ class Playlist implements \JsonSerializable {
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=false)
      */
     private $title;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $icon;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=false)
+     */
+    private $style;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="userOwnedPlaylists")
@@ -78,6 +88,52 @@ class Playlist implements \JsonSerializable {
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set icon
+     *
+     * @param string $icon
+     * @return Playlist
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set style
+     *
+     * @param string $style
+     * @return Playlist
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get style
+     *
+     * @return string
+     */
+    public function getStyle()
+    {
+        return $this->style;
     }
 
     /**

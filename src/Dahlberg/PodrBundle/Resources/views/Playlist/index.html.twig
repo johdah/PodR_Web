@@ -12,18 +12,28 @@
     </div>
     <div class="row playlist-index">
         {% if playlists %}
-            <dl class="tabs vertical playlist-list one-liner">
-                {% for playlist in playlists %}
-                    <dd><a href="{{ path('playlist_details', {'id': playlist.getId}) }}">{{ playlist.getTitle }}</a></dd>
-                {% endfor %}
-            </dl>
+        <div class="playlist-list">
+            {% for playlist in playlists %}
+            <div class="row">
+                <div class="large-1 columns"><i class="fi-{{ playlist.getIcon }} icon-{{ playlist.getStyle }}"></i></div>
+                <div class="large-11 columns">
+                    <p><h2><a href="{{ path('playlist_details', {'id': playlist.getId}) }}">{{ playlist.getTitle }}</a></h2></p>
+                    <!--<ul class="inline-list">
+                        <li><a href=""></a></li>
+                    </ul>-->
+                </div>
+            </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <p>No playlists found.</p>
+        <p>No playlists found.</p>
         {% endif %}
 
         <h3>Add playlist</h3>
         {{ form_start(form) }}
             {{ form_row(form.title) }}
+            {{ form_row(form.icon) }}
+            {{ form_row(form.style) }}
             {{ form_errors(form) }}
             {% if formSuccess %}
                 <div data-alert class="alert-box success radius">
