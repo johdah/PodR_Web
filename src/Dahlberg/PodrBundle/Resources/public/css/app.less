@@ -1,0 +1,104 @@
+@blue: #33B5E5;
+@darkblue: #0099CC;
+@green: #99CC00;
+@darkgreen: #669900;
+@purple: #AA66CC;
+@darkpurple: #9933CC;
+@red: #FF4444;
+@darkred: #CC0000;
+@white: #FFFFFF;
+@yellow: #FFBB33;
+@darkyellow: #FF8800;
+
+/* Foundation icons
+-------------------------------------*/
+.icon-glowing (@color: #000000, @color2: #FFFFFF) {
+  color: @color;
+  font-size: 50px;
+  text-shadow: 0 0 2px @color2, 0 0 4px @color2, 0 0 6px @color2, 0 0 8px @color, 0 0 10px @color, 0 0 15px @color, 0 0 20px @color, 0 0 35px #E33100;
+}
+.icon-standard (@color: #FFFFFF) {
+  color: @color;
+  font-size: 50px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+.icon-blue {
+  .icon-standard(@blue);
+}
+
+.icon-blue-glowing {
+  .icon-glowing(@blue, @white);
+}
+
+.icon-darkblue {
+  .icon-standard(@darkblue);
+}
+
+.icon-darkblue-glowing {
+  .icon-glowing(@darkblue, @white);
+}
+
+.icon-green {
+  .icon-standard(@green);
+}
+
+.icon-green-glowing {
+  .icon-glowing(@green, @white);
+}
+
+.icon-darkgreen {
+  .icon-standard(@darkgreen);
+}
+
+.icon-darkgreen-glowing {
+  .icon-glowing(@darkgreen, @white);
+}
+
+.icon-purple {
+  .icon-standard(@purple);
+}
+
+.icon-purple-glowing {
+  .icon-glowing(@purple, @white);
+}
+
+.icon-darkpurple {
+  .icon-standard(@darkpurple);
+}
+
+.icon-darkpurple-glowing {
+  .icon-glowing(@darkpurple, @white);
+}
+
+.icon-red {
+  .icon-standard(@red);
+}
+
+.icon-red-glowing {
+  .icon-glowing(@red, @white);
+}
+
+.icon-darkred {
+  .icon-standard(@darkred);
+}
+
+.icon-darkred-glowing {
+  .icon-glowing(@darkred, @white);
+}
+
+.icon-yellow {
+  .icon-standard(@yellow);
+}
+
+.icon-yellow-glowing {
+  .icon-glowing(@yellow, @white);
+}
+
+.icon-darkyellow {
+  .icon-standard(@darkyellow);
+}
+
+.icon-darkyellow-glowing {
+  .icon-glowing(@darkyellow, @white);
+}

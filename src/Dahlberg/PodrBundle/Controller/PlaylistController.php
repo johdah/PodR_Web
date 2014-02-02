@@ -80,11 +80,26 @@ class PlaylistController extends Controller {
             ->add('style', 'choice', array(
                 'required' => true,
                 'choices' => array(
-                    "style1"    => "Green",
-                    "style2"    => "Blue (Shadow)",
-                    "style3"    => "Red (Glowing)",
-                    "style4"    => "Purple",
-                    "style5"    => "Yellow (Depth)",
+                    "blue"                  => "Blue",
+                    "blue-glowing"          => "Blue Glowing",
+                    "darkblue"              => "Dark Blue",
+                    "darkblue-glowing"      => "Dark Blue Glowing",
+                    "darkgreen"             => "Dark Green",
+                    "darkgreen-glowing"     => "Dark Green Glowing",
+                    "darkpurple"            => "Dark Purple",
+                    "darkpurple-glowing"    => "Dark Purple Glowing",
+                    "darkred"               => "Dark Red",
+                    "darkred-glowing"       => "Dark Red Glowing",
+                    "darkyellow"            => "Dark Yellow",
+                    "darkyellow-glowing"    => "Dark Yellow Glowing",
+                    "green"                 => "Green",
+                    "green-glowing"         => "Green Glowing",
+                    "purple"                => "Purple",
+                    "purple-glowing"        => "Purple Glowing",
+                    "red"                   => "Red",
+                    "red-glowing"           => "Red Glowing",
+                    "yellow"                => "Yellow",
+                    "yellow-glowing"        => "Yellow Glowing",
                 )
             ))
             ->add('save', 'submit')

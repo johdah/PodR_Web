@@ -3,7 +3,7 @@ PodR Web Edition
 
 1) Prepare the server
 -------------------------------------
-- Install nodejs and coffeescript and set the path in config.php
+- Install nodejs and the modules [coffeescript] and set the path in config.php
 
 
 2) Checking your System Configuration
