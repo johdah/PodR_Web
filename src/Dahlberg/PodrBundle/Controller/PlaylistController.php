@@ -4,6 +4,7 @@ namespace Dahlberg\PodrBundle\Controller;
 
 use Dahlberg\PodrBundle\Entity\Playlist;
 use Dahlberg\PodrBundle\Entity\PlaylistPodcast;
+use Dahlberg\PodrBundle\Form\Type\PlaylistType;
 use Dahlberg\PodrBundle\Lib\DataManipulator;
 use Doctrine\DBAL\DBALException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -60,50 +61,45 @@ class PlaylistController extends Controller {
             'podcasts'      => $podcasts,
         ));
     }
+    public function editAction(Request $request, $id) {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $playlist = $em->getRepository('DahlbergPodrBundle:Playlist')->findOneBy(array('id' => $id, 'owner' => $user));
+
+        $form = $this->createForm(new PlaylistType(), $playlist);
+        $form->handleRequest($request);
+        $formSuccess = null;
+
+        if ($form->isValid()) {
+            $playlist->setIcon($form->get('icon')->getData());
+            $playlist->setOwner($user);
+            $playlist->setStyle($form->get('style')->getData());
+            $playlist->setTitle($form->get('title')->getData());
+
+            $em->persist($playlist);
+            try {
+                $em->flush();
+                $formSuccess = "Playlist edited!";
+
+                return $this->redirect($this->generateUrl('playlist_details', array('id' => $id)));
+            } catch(DBALException $e) {
+                $form->addError(new FormError("Can't edit that playlist."));
+            }
+        }
+
+        return $this->render('DahlbergPodrBundle:Playlist:edit.html.twig', array(
+            'form'          => $form->createView(),
+            'formSuccess'   => $formSuccess,
+            'playlist'      => $playlist,
+        ));
+    }
 
     public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.context')->getToken()->getUser();
 
-        $form = $this->createFormBuilder()
-            ->add('title', 'text', array(
-                'required' => true
-            ))
-            ->add('icon', 'choice', array(
-                'required' => true,
-                'choices' => array(
-                    "heart"     => "Heart",
-                    "like"      => "Like",
-                    "marker"    => "Marker",
-                )
-            ))
-            ->add('style', 'choice', array(
-                'required' => true,
-                'choices' => array(
-                    "blue"                  => "Blue",
-                    "blue-glowing"          => "Blue Glowing",
-                    "darkblue"              => "Dark Blue",
-                    "darkblue-glowing"      => "Dark Blue Glowing",
-                    "darkgreen"             => "Dark Green",
-                    "darkgreen-glowing"     => "Dark Green Glowing",
-                    "darkpurple"            => "Dark Purple",
-                    "darkpurple-glowing"    => "Dark Purple Glowing",
-                    "darkred"               => "Dark Red",
-                    "darkred-glowing"       => "Dark Red Glowing",
-                    "darkyellow"            => "Dark Yellow",
-                    "darkyellow-glowing"    => "Dark Yellow Glowing",
-                    "green"                 => "Green",
-                    "green-glowing"         => "Green Glowing",
-                    "purple"                => "Purple",
-                    "purple-glowing"        => "Purple Glowing",
-                    "red"                   => "Red",
-                    "red-glowing"           => "Red Glowing",
-                    "yellow"                => "Yellow",
-                    "yellow-glowing"        => "Yellow Glowing",
-                )
-            ))
-            ->add('save', 'submit')
-            ->getForm();
+        $form = $this->createForm(new PlaylistType());
         $form->handleRequest($request);
         $formSuccess = null;
 

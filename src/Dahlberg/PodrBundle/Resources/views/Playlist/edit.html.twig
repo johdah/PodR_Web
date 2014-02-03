@@ -1,0 +1,32 @@
+{# src/Dahlberg/PodrBundle/Resources/views/Playlist/edit.html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }} | Playlists{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="breadcrumbs">
+            <a href="{{ path('root') }}">Home</a>
+            <a href="{{ path('playlist_index') }}">Playlists</a>
+            <a href="{{ path('playlist_details', {'id': playlist.getId}) }}">{{ playlist.getTitle }}</a>
+            <a class="current">Edit</a>
+        </nav>
+    </div>
+    <div class="row playlist-edit">
+        <h3>Add playlist</h3>
+        {{ form_start(form) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.icon) }}
+            {{ form_row(form.style) }}
+            {{ form_errors(form) }}
+            {% if formSuccess %}
+                <div data-alert class="alert-box success radius">
+                    {{ formSuccess }}
+                </div>
+            {% endif %}
+            <div>
+                {{ form_widget(form.save) }}
+            </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

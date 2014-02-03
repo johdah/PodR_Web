@@ -4,8 +4,8 @@
 {% block title %}{{ parent() }} | Playlists{% endblock %}
 
 {% block headstylesheets %}
-    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/dahlbergpodr/css/vendor/jquery/ui-lightness/jquery-ui-1.10.4.custom.min.css') }}" type="text/css" media="all"/>
+    {{ parent() }}
 {% endblock %}
 
 {% block bodyjavascripts %}
@@ -240,6 +240,7 @@
             <h1>Playlist</h1>
             <p>The selected playlist doesn't exist.</p>
         {% endif %}
+            <a href="{{ path('playlist_edit', {'id': playlist.getId}) }}" class="button radius">Edit playlist</a>
         </div>
     </div>
 {% endblock %}
