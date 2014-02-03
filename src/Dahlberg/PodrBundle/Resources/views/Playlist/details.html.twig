@@ -163,84 +163,100 @@
         </nav>
     </div>
     <div class="row playlist-details">
-        <div class="large-3 columns">
-            <h2>Podcasts</h2>
-            {% if playlist.getPlaylistPodcasts %}
-            <ul class="podcast-list">
-                {% for podcast in podcasts %}
-                <li><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle[:25] }}</a>
-                    <a href="{{ path('playlist_remove_podcast', {'playlistId': playlist.getId, 'podcastId': podcast.getId}) }}"><span class="label round secondary right">X</span></a></li>
-                {% endfor %}
-            </ul>
-            {% else %}
-                <p>No podcasts found.</p>
-            {% endif %}
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#unarchived">Unarchived</a></dd>
+            <dd><a href="#podcasts">Podcasts</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="unarchived">
+                {% if playlist %}
+                <h1><small id="playlist_id">#{{ playlist.getId }} </small> {{ playlist.getTitle }}</h1>
 
-            <h4>Add podcasts</h4>
-            {{ form_start(form) }}
-                <div class="ui-widget">
-                    {{ form_row(form.podcasts) }}
-                </div>
-                {{ form_errors(form) }}
-                {% if formSuccess %}
-                    <div data-alert class="alert-box success radius">
-                        {{ formSuccess }}
-                    </div>
-                {% endif %}
-                <div>
-                    {{ form_widget(form.add) }}
-                </div>
-            {{ form_end(form) }}
-        </div>
-        <div class="large-9 columns">
-        {% if playlist %}
-            <h1><small id="playlist_id">#{{ playlist.getId }} </small> {{ playlist.getTitle }}</h1>
-
-            <h2>Episodes</h2>
-            {% if playlist.getPlaylistPodcasts %}
-                <table class="podcast-table">
-                    <thead>
-                    <tr>
-                        <th width="200"></th>
-                        <th>Title</th>
-                        <th width="130">Published Date</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for episode in episodes %}
+                <h2>Episodes</h2>
+                {% if playlist.getPlaylistPodcasts %}
+                    <table class="podcast-table">
+                        <thead>
                         <tr>
-                            <td class="episode-image">
-                                {% if episode.getItunesImage %}
-                                    <a class="th round" href="{{ episode.getItunesImage }}">
-                                        <img src="{{ episode.getItunesImage }}">
-                                    </a>
-                                {% elseif episode.getPodcast.getItunesImage %}
-                                    <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
-                                        <img src="{{ episode.getPodcast.getItunesImage }}">
-                                    </a>
-                                {% endif %}
-                            </td>
-                            <td class="episode-info">
-                                <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
-                                <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
-                                <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
-                                        {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
-                                        {% else %}-{% endif %}</p></div>
-                            </td>
-                            <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                            <th width="200"></th>
+                            <th>Title</th>
+                            <th width="130">Published Date</th>
                         </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% else %}
-                <p>No podcasts found.</p>
-            {% endif %}
+                        </thead>
+                        <tbody>
+                        {% for episode in episodes %}
+                            <tr>
+                                <td class="episode-image">
+                                    {% if episode.getItunesImage %}
+                                        <a class="th round" href="{{ episode.getItunesImage }}">
+                                            <img src="{{ episode.getItunesImage }}">
+                                        </a>
+                                    {% elseif episode.getPodcast.getItunesImage %}
+                                        <a class="th round" href="{{ episode.getPodcast.getItunesImage }}">
+                                            <img src="{{ episode.getPodcast.getItunesImage }}">
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td class="episode-info">
+                                    <div class="episode-title"><h4><a href="{{ path('episode_details', {'id': episode.getId}) }}">{{ episode.getTitle[:55] }}</a></h4></div>
+                                    <div class="podcast-title"><h5><a href="{{ path('podcast_details', {'id': episode.getPodcast.getId}) }}">{{ episode.getPodcast.getTitle[:80] }}</a></h5></div>
+                                    <div class="episode-description"><p>{% if episode.getItunesSubtitle %}{{ episode.getItunesSubtitle[:240] }}
+                                            {% elseif episode.getItunesSummary %}{{ episode.getItunesSummary[:240] }}
+                                            {% else %}-{% endif %}</p></div>
+                                </td>
+                                <td>{% if episode.getPublishedDate %}{{ episode.getPublishedDate|date('Y-m-d') }}{% else %}-{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No podcasts found.</p>
+                {% endif %}
 
-        {% else %}
-            <h1>Playlist</h1>
-            <p>The selected playlist doesn't exist.</p>
-        {% endif %}
-            <a href="{{ path('playlist_edit', {'id': playlist.getId}) }}" class="button radius">Edit playlist</a>
+                {% else %}
+                    <h1>Playlist</h1>
+                    <p>The selected playlist doesn't exist.</p>
+                {% endif %}
+                <a href="{{ path('playlist_edit', {'id': playlist.getId}) }}" class="button radius">Edit playlist</a>
+            </div>
+            <div class="content" id="podcasts">
+                <h2>Podcasts</h2>
+                {% if playlist.getPlaylistPodcasts %}
+                    <table class="podcast-table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th width="100"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for podcast in podcasts %}
+                            <tr>
+                                <td><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></td>
+                                <td><a href="{{ path('playlist_remove_podcast', {'playlistId': playlist.getId, 'podcastId': podcast.getId}) }}"><span class="label round secondary right">X</span></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No podcasts found.</p>
+                {% endif %}
+
+                <h4>Add podcasts</h4>
+                {{ form_start(form) }}
+                    <div class="ui-widget">
+                        {{ form_row(form.podcasts) }}
+                    </div>
+                    {{ form_errors(form) }}
+                    {% if formSuccess %}
+                        <div data-alert class="alert-box success radius">
+                            {{ formSuccess }}
+                        </div>
+                    {% endif %}
+                    <div>
+                        {{ form_widget(form.add) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}

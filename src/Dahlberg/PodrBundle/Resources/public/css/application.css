@@ -56,19 +56,22 @@
     margin-top: 20px;
 }
 
-.playlist-index .playlist-list {
-    width: 100%;
-}
-    .playlist-list .playlist-icon {
-        color: #990000;
-        font-size: 280%;
-        line-height: 48px;
+    .playlist-index .playlist-list {
+        width: 100%;
     }
+        .playlist-list .playlist-icon {
+            color: #990000;
+            font-size: 280%;
+            line-height: 48px;
+        }
 
-.playlist-details .podcast-list {
-    list-style: none;
-    margin-left: 0;
+.playlist-details {
+    margin-top: 20px;
 }
+    .playlist-details .podcast-list {
+        list-style: none;
+        margin-left: 0;
+    }
 
 /* Podcast
 -------------------------------------*/
