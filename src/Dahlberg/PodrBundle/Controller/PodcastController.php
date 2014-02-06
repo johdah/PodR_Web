@@ -229,7 +229,7 @@ class PodcastController extends Controller {
 
         $this->updater($podcast);
 
-        return $this->redirect($this->generateUrl('podcast_index'));
+        return $this->redirect($this->generateUrl('podcast_details', array('id' => $id)));
     }
 
     /* NOT ACTIONS */
