@@ -137,10 +137,17 @@ class PodcastController extends Controller {
         $formSuccess = null;
 
         if ($form->isValid()) {
-            $podcast = new Podcast();
-            $podcast->setFeedurl($form->get('feedurl')->getData());
-
+            $podcast = $this->preparePodcast($form->get('feedurl')->getData());
             $em->persist($podcast);
+            //$em->flush();
+
+            $userPodcast = $this->prepareUserPodcast($podcast->getId());
+            $userPodcast->setFollowing(true);
+            $userPodcast->setDateUpdated(new \DateTime('NOW'));
+
+            $em->persist($userPodcast);
+            $em->flush();
+
             // TODO: Need to check if podcast already exists in a better way
             try {
                 $em->flush();
@@ -226,6 +233,19 @@ class PodcastController extends Controller {
     }
 
     /* NOT ACTIONS */
+
+    public function preparePodcast($feedurl) {
+        $podcast = $this->getDoctrine()
+            ->getRepository('DahlbergPodrBundle:Podcast')
+            ->findOneBy(array('feedurl' => $feedurl));
+
+        if(!$podcast) {
+            $podcast = new Podcast();
+            $podcast->setFeedurl($feedurl);
+        }
+
+        return $podcast;
+    }
 
     public function prepareUserEpisode($episode, $user) {
         if(!$episode)

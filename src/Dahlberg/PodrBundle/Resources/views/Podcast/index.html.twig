@@ -35,7 +35,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{{ podcast.getTitle }}</a></h4></div>
+                        <div class="podcast-title"><h4><a href="{{ path('podcast_details', {'id': podcast.getId}) }}">{% if podcast.getTitle %}{{ podcast.getTitle }}{% else %}Unknown title{% endif %}</a></h4></div>
                         <div class="podcast-description"><p>{{ podcast.getDescription[:240] }}</p></div>
                     </td>
                     <td>{% if podcast.getDateUpdated %}{{ podcast.getDateUpdated|date('Y-m-d') }}{% else %}-{% endif %}</td>
