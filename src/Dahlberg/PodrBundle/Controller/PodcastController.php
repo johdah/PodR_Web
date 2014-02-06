@@ -131,7 +131,7 @@ class PodcastController extends Controller {
             ->add('feedurl', 'url', array(
                 'required' => true
             ))
-            ->add('save', 'submit')
+            ->add('add', 'submit')
             ->getForm();
         $form->handleRequest($request);
         $formSuccess = null;
