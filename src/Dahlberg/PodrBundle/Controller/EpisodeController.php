@@ -36,6 +36,12 @@ class EpisodeController extends Controller {
             $em->persist($userEpisode);
             $em->flush();
         }
+        if($userEpisode == null) {
+            $userEpisode = $this->prepareUserEpisode($episode->getId());
+            $userEpisode->setUnread(false);
+            $em->persist($userEpisode);
+            $em->flush();
+        }
 
         if(!$episode)
             throw $this->createNotFoundException('The episode does not exist');
