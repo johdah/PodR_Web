@@ -131,15 +131,13 @@ class PodcastController extends Controller {
             ->add('feedurl', 'url', array(
                 'required' => true
             ))
-            ->add('add', 'submit')
+            ->add('save', 'submit')
             ->getForm();
         $form->handleRequest($request);
         $formSuccess = null;
 
         if ($form->isValid()) {
-            $podcast = $this->preparePodcast($form->get('feedurl')->getData());
-            $em->persist($podcast);
-            //$em->flush();
+            $podcast = $this->importPodcast($form->get('feedurl')->getData());
 
             $userPodcast = $this->prepareUserPodcast($podcast->getId());
             $userPodcast->setFollowing(true);
@@ -284,6 +282,32 @@ class PodcastController extends Controller {
         }
 
         return $userPodcast;
+    }
+
+    public function importPodcast($feedurl) {
+        $em = $this->getDoctrine()->getManager();
+
+        $podcast = $this->preparePodcast($feedurl);
+        $parser = new PodcastParser($podcast->getFeedurl());
+        $podcast->setCopyright($parser->getPodcastCopyright());
+        $podcast->setDescription($parser->getPodcastDescription());
+        $podcast->setLanguage($parser->getPodcastLanguage());
+        $podcast->setLink($parser->getPodcastLink());
+        $podcast->setTitle(($parser->getPodcastTitle() && trim($parser->getPodcastTitle()) !== "") ? $parser->getPodcastTitle() : "Unknown title");
+        $podcast->setItunesAuthor($parser->getEpisodeItunesAuthor());
+        $podcast->setItunesBlock($parser->getEpisodeItunesBlock());
+        $podcast->setItunesComplete($parser->getPodcastItunesComplete());
+        $podcast->setItunesExplicit($parser->getPodcastItunesExplicit());
+        $podcast->setItunesImage($parser->getPodcastItunesImage());
+        $podcast->setItunesOwnerEmail($parser->getPodcastItunesOwnerEmail());
+        $podcast->setItunesOwnerName($parser->getPodcastItunesOwnerName());
+        $podcast->setItunesSubtitle($parser->getPodcastItunesSubtitle());
+        $podcast->setItunesSummary($parser->getPodcastItunesSummary());
+
+        $em->persist($podcast);
+        $em->flush();
+
+        return $podcast;
     }
 
     public function updater(Podcast $podcast) {

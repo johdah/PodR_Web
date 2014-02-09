@@ -11,9 +11,10 @@ PROJECT_LOCAL_PATH=/home/user/projects/PodR_Web
 function prep()
 {
     echo "Preparing for Deploy..."
-    php $PROJECT_LOCAL_PATH/app/console cache:clear --env=prod --no-debug
+    php $PROJECT_LOCAL_PATH/app/console cache:clear --env=prod
     php $PROJECT_LOCAL_PATH/app/console assetic:dump --env=prod --no-debug
     php $PROJECT_LOCAL_PATH/app/console assets:install web --symlink
+    chmod 777 -R $PROJECT_LOCAL_PATH/app/cache
 }
 
 

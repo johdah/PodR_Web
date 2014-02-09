@@ -48,7 +48,7 @@
         <p>No podcasts found.</p>
         {% endif %}
 
-        <h3>Import Podcast</h3>
+        <h3>Add Podcast</h3>
         {{ form_start(form) }}
             {{ form_row(form.feedurl) }}
             {{ form_errors(form) }}
@@ -58,7 +58,7 @@
                 </div>
             {% endif %}
             <div>
-                {{ form_widget(form.add) }}
+                {{ form_widget(form.save, { 'label': 'Add' }) }}
                 <a href="{{ path('podcast_import') }}" class="button radius">Import</a>
             </div>
         {{ form_end(form) }}
